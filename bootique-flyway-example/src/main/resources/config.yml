@@ -1,0 +1,12 @@
+jdbc:
+  h2:
+    url: jdbc:h2:~/bootique-flyway-test
+    username: ''
+    password: ''
+    driverClassName: org.h2.Driver
+
+flyway:
+  locations:
+    - db/migration
+  dataSources:
+    - h2
