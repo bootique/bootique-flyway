@@ -11,8 +11,8 @@ script:
   - 'if [ "$TRAVIS_SECURE_ENV_VARS" = "true" ]; then mvn clean source:jar javadoc:javadoc deploy --settings travis_settings.xml; fi'
   - 'if [ "$TRAVIS_SECURE_ENV_VARS" = "false" ]; then mvn clean verify; fi'
 
-# travis encrypt -r bootique/bootique-liquibase "CI_DEPLOY_USERNAME='name'"
-# travis encrypt -r bootique/bootique-liquibase "CI_DEPLOY_PASSWORD='password'"
+# travis encrypt -r bootique/bootique-flyway "CI_DEPLOY_USERNAME='name'"
+# travis encrypt -r bootique/bootique-flyway "CI_DEPLOY_PASSWORD='password'"
 env:
   global:
     - secure: "iaGj99sXSabVfm8BfT/1i7MAPnsT4jbBV1M2hlzEaEbQBp4RvDFL2cATto5BmqzAFosvJkBn3lDpZ0+Tsf/Vasn2LbXOIsqqClsQTk5BWhIyIOyFSWWOCx0GZ/rmXlQCES2FvPAe+6dXvZ8uBC21A1/ijXcXfrIMg/N+wLA+TYOgTe+t5t5vldKYnWxYET4TrewZ/5ohIbOM9tmo57/ozZixCjgm9ls2o5N5KhLjncCMhvNTRlZpWZTK20h5rARgjwaPp++l+td1zDPdYCzi2AKP1e7liyAamVt62yOhCcHJZiq0euIqvcaG6vbdU1xewIlxPxtMG22AO6Jtou21SQgJ5aseubjEcEEmzwsmLoNLO8Q8yGETBQykKpV+h48/3x8ZAjeQ5V3OpB0vq6F04EUMaRfkptyKbEA+tFbCkkbCn+xDl9h40Y2P5Cf/Pr035zWzUOb/DuHLLj4kMRKNvWhaqDa3S/54M4kza+Ch54yiQNITczx4WME1wBhnLyWgkmcYTjjz7qBC0a/kaGoGpdxQgsRXj8RC5079mZu5YeMBMK8+vpTztdULcd+GkEvh9f+Pt4H9iv74rA8WZwbdrk+gzy8JYg6RYE4LT7OlUftrcnwVPKwJ/9mGKJy+7W1BLpl061ZYvr15HAppMxm3yKfkc0W/31yzsDucT14BEFA="
