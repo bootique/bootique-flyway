@@ -3,4 +3,4 @@
 
 # bootique-flyway
 
-Provides Flyway integration with [Bootique](http://bootique.io).
+Provides [Flyway](https://flywaydb.org/) migrations framework integration with [Bootique](http://bootique.io).
