@@ -11,7 +11,7 @@
 
     <artifactId>bootique-flyway-example</artifactId>
 
-    <name>bootique-flyway-example</name>
+    <name>bootique-flyway-example: example flyway code.</name>
     <description>
         Example project for show usage and testing of flyway applications.
     </description>

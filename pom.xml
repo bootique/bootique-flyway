@@ -14,7 +14,7 @@
     <version>0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>bootique-flyway-parent</name>
+    <name>bootique-flyway-parent: Parent of Flyway/Bootique integration</name>
     <description>
         Parent POM of Bootique Flyway module.
     </description>
@@ -25,7 +25,7 @@
     </modules>
 
     <properties>
-        <bootique-version>0.20</bootique-version>
+        <bootique-version>0.21-SNAPSHOT</bootique-version>
         <flyway-version>4.0.3</flyway-version>
     </properties>
 

@@ -2,11 +2,11 @@ package io.bootique.flyway.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-import io.bootique.application.CommandMetadata;
 import io.bootique.cli.Cli;
 import io.bootique.command.CommandOutcome;
 import io.bootique.command.CommandWithMetadata;
 import io.bootique.flyway.FlywayRunner;
+import io.bootique.meta.application.CommandMetadata;
 
 import static io.bootique.flyway.command.FlywayCommand.command;
 
