@@ -25,7 +25,9 @@
     </modules>
 
     <properties>
-        <bootique-version>0.21-SNAPSHOT</bootique-version>
+        <bootique-version>0.21</bootique-version>
+        <bootique-jdbc-version>0.13</bootique-jdbc-version>
+        <bootique-logback-version>0.13</bootique-logback-version>
         <flyway-version>4.0.3</flyway-version>
     </properties>
 
@@ -46,16 +48,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.bootique.bom</groupId>
-                <artifactId>bootique-bom</artifactId>
-                <version>${bootique-version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>io.bootique.jdbc</groupId>
+                <artifactId>bootique-jdbc</artifactId>
+                <version>${bootique-jdbc-version}</version>
             </dependency>
             <dependency>
-                <groupId>io.bootique.flyway</groupId>
-                <artifactId>bootique-flyway</artifactId>
-                <version>${project.version}</version>
+                <groupId>io.bootique.logback</groupId>
+                <artifactId>bootique-logback</artifactId>
+                <version>${bootique-logback-version}</version>
             </dependency>
             <dependency>
                 <groupId>org.flywaydb</groupId>
