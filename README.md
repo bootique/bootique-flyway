@@ -23,6 +23,9 @@ Provides [Flyway](https://flywaydb.org/) migrations framework integration with [
 compile("io.bootique.flyway:bootique-flyway:0.1")
 ```
 
+*Note:* **bootique-flyway** is a part of [bootique-bom](https://github.com/bootique/bootique-bom), and version can be 
+imported from there.
+
 ## Create first migration
 
 **src/main/resources/db/migration/V1__Create_person_table.sql:**
@@ -84,3 +87,7 @@ java -jar app.jar --config=config.yml --migrate
    or classpath) to detect accidental changes that may prevent the
    schema(s) from being recreated exactly.
 ```
+
+## Example Project
+
+[bootique-flyway-example](https://github.com/bootique/bootique-flyway/tree/master/bootique-flyway-example)
