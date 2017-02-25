@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@BQConfig("Flyway configuration class.")
+@BQConfig("Configures Flyway.")
 public class FlywayFactory {
     private List<String> dataSources = new ArrayList<>();
     private List<String> locations = Collections.singletonList("db/migration");
@@ -20,12 +20,12 @@ public class FlywayFactory {
         return new FlywaySettings(dataSources, locations);
     }
 
-    @BQConfigProperty("The dataSources to use to access the database.")
+    @BQConfigProperty("References to dataSources to access the database.")
     public void setDataSources(List<String> dataSources) {
         this.dataSources = dataSources;
     }
 
-    @BQConfigProperty("The locations to scan recursively for migrations.")
+    @BQConfigProperty("The locations to scan recursively for migration scripts.")
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }

@@ -16,6 +16,7 @@ import io.bootique.jdbc.DataSourceFactory;
 import static java.util.Arrays.asList;
 
 public class FlywayModule extends ConfigModule {
+
     @Override
     public void configure(Binder binder) {
         asList(
@@ -25,11 +26,7 @@ public class FlywayModule extends ConfigModule {
                 MigrateCommand.class,
                 RepairCommand.class,
                 ValidateCommand.class
-        ).forEach(command -> {
-            BQCoreModule.contributeCommands(binder)
-                    .addBinding()
-                    .to(command);
-        });
+        ).forEach(command -> BQCoreModule.extend(binder).addCommand(command));
     }
 
     @Provides

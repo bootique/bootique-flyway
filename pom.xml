@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>0.2</version>
+        <version>0.7</version>
     </parent>
 
     <groupId>io.bootique.flyway</groupId>
@@ -24,9 +24,9 @@
     </modules>
 
     <properties>
-        <bootique-version>0.21</bootique-version>
-        <bootique-jdbc-version>0.13</bootique-jdbc-version>
-        <bootique-logback-version>0.13</bootique-logback-version>
+        <bootique-version>0.22-SNAPSHOT</bootique-version>
+        <bootique-jdbc-version>0.14-SNAPSHOT</bootique-jdbc-version>
+        <bootique-logback-version>0.14-SNAPSHOT</bootique-logback-version>
         <flyway-version>4.0.3</flyway-version>
     </properties>
 
@@ -73,13 +73,8 @@
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.13</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
-                <version>1.7.13</version>
+                <version>${slf4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
