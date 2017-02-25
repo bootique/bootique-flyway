@@ -11,10 +11,21 @@ Provides [Flyway](https://flywaydb.org/) migrations framework integration with [
 
 **Maven**
 ```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.bootique.bom</groupId>
+            <artifactId>bootique-bom</artifactId>
+            <version>0.21</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
 <dependency>
     <groupId>io.bootique.flyway</groupId>
     <artifactId>bootique-flyway</artifactId>
-    <version>0.1</version>
 </dependency>
 ```
 
