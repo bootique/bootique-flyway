@@ -37,68 +37,33 @@ compile("io.bootique.flyway:bootique-flyway:0.1")
 *Note:* **bootique-flyway** is a part of [bootique-bom](https://github.com/bootique/bootique-bom), and version can be 
 imported from there.
 
-## Create first migration
-
-**src/main/resources/db/migration/V1__Create_person_table.sql:**
-```sql
-create table PERSON (
-    ID int not null,
-    NAME varchar(100) not null
-);
-```
-
-## Define datasources
-
-**config.yml:**
-```yaml
-jdbc:
-  h2:
-    url: jdbc:h2:~/bootique-flyway-test
-    username: 'username'
-    password: 'password'
-    driverClassName: org.h2.Driver
-
-flyway:
-  locations:
-    - db/migration # default, can be omitted
-  dataSources:
-    - h2
-```
-
-## Run commands
-
-```bash
-java -jar app.jar --config=config.yml --migrate
-```
 
 ## Available commands
 
+Flyway is based around just 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair. They are presented in 
+Bootique-Flyway module:
+
 ```
--b, --baseline
-   Baselines an existing database, excluding all migrations up to and
-   including baselineVersion.
+OPTIONS
+  -b, --baseline
+       Baselines an existing database, excluding all migrations up to and including baselineVersion.
 
---clean
-   Drops all objects (tables, views, procedures, triggers, ...) in the
-   configured schemas.The schemas are cleaned in the order specified by
-   the schemas property.
+  --clean
+       Drops all objects (tables, views, procedures, triggers, ...) in the configured schemas.The schemas are cleaned in the order specified by the schemas property.
 
--i, --info
-   Prints the details and status information about all the migrations.
+  -i, --info
+       Prints the details and status information about all the migrations.
 
--m, --migrate
-   Migrates the schema to the latest version. Flyway will create the
-   metadata table automatically if it doesn't exist.
+  -m, --migrate
+       Migrates the schema to the latest version. Flyway will create the metadata table automatically if it doesn't exist.
 
--r, --repair
-   Repairs the metadata table.
+  -r, --repair
+       Repairs the metadata table.
 
--v, --validate
-   Validate applied migrations against resolved ones (on the filesystem
-   or classpath) to detect accidental changes that may prevent the
-   schema(s) from being recreated exactly.
+  -v, --validate
+       Validate applied migrations against resolved ones (on the filesystem or classpath) to detect accidental changes that may prevent the schema(s) from being recreated exactly.
 ```
 
 ## Example Project
 
-[bootique-flyway-example](https://github.com/bootique/bootique-flyway/tree/master/bootique-flyway-example)
+[bootique-flyway-demo](https://github.com/bootique-examples/bootique-flyway-demo)
