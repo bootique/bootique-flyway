@@ -1,0 +1,12 @@
+jdbc:
+  test:
+    url: jdbc:h2:mem:defaultMigration
+    username: ''
+    password: ''
+    driverClassName: org.h2.Driver
+
+flyway:
+  locations:
+    - db/migration
+  dataSources:
+    - test
