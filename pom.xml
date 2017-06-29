@@ -20,7 +20,6 @@
 
     <modules>
         <module>bootique-flyway</module>
-        <module>bootique-flyway-example</module>
     </modules>
 
     <properties>
