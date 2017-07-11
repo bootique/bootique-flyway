@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.bootique.flyway</groupId>
         <artifactId>bootique-flyway-parent</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
     </parent>
 
     <artifactId>bootique-flyway</artifactId>
