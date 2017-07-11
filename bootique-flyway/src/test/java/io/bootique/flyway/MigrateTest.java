@@ -1,9 +1,9 @@
 package io.bootique.flyway;
 
+import io.bootique.BQRuntime;
 import io.bootique.command.CommandOutcome;
 import io.bootique.jdbc.test.DatabaseChannel;
 import io.bootique.jdbc.test.Table;
-import io.bootique.test.BQTestRuntime;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class MigrateTest {
 
     @Test
     public void defaultMigration() throws SQLException {
-        BQTestRuntime runtime = testFactory
+        BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/defaultMigration.yml", "--migrate")
             .autoLoadModules()
             .createRuntime();
@@ -36,7 +36,7 @@ public class MigrateTest {
 
     @Test
     public void defaultExplicitMigration() throws SQLException {
-        BQTestRuntime runtime = testFactory
+        BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
             .autoLoadModules()
             .createRuntime();
@@ -46,7 +46,7 @@ public class MigrateTest {
 
     @Test
     public void nonStandardLocationMigration() throws SQLException {
-        BQTestRuntime runtime = testFactory
+        BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
             .autoLoadModules()
             .createRuntime();
@@ -54,7 +54,7 @@ public class MigrateTest {
         testMigrateCommand(runtime);
     }
 
-    private void testMigrateCommand(BQTestRuntime runtime) {
+    private void testMigrateCommand(BQRuntime runtime) {
         CommandOutcome result = runtime.run();
         assertTrue(result.isSuccess());
 

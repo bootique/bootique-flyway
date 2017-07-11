@@ -24,9 +24,9 @@
     </modules>
 
     <properties>
-        <bootique-version>0.22</bootique-version>
-        <bootique-jdbc-version>0.14</bootique-jdbc-version>
-        <bootique-logback-version>0.14</bootique-logback-version>
+        <bootique-version>0.23</bootique-version>
+        <bootique-jdbc-version>0.15</bootique-jdbc-version>
+        <bootique-logback-version>0.15</bootique-logback-version>
         <flyway-version>4.0.3</flyway-version>
         <h2-version>1.4.193</h2-version>
     </properties>
