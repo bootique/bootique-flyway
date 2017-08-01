@@ -10,7 +10,7 @@
 
     <groupId>io.bootique.flyway</groupId>
     <artifactId>bootique-flyway-parent</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.24-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>bootique-flyway-parent: Parent of Flyway/Bootique integration</name>
