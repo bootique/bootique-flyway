@@ -4,6 +4,7 @@
 # bootique-flyway
 
 Provides [Flyway](https://flywaydb.org/) migrations framework integration with [Bootique](http://bootique.io).
+See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bootique-flyway-demo).
 
 # Setup
 
