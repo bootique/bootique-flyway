@@ -8,7 +8,6 @@ import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -25,7 +24,7 @@ public class MigrateTest {
     public final BQTestFactory testFactory = new BQTestFactory();
 
     @Test
-    public void defaultMigration() throws SQLException {
+    public void defaultMigration() {
         BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/defaultMigration.yml", "--migrate")
             .autoLoadModules()
@@ -35,7 +34,7 @@ public class MigrateTest {
     }
 
     @Test
-    public void defaultExplicitMigration() throws SQLException {
+    public void defaultExplicitMigration() {
         BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
             .autoLoadModules()
@@ -45,7 +44,7 @@ public class MigrateTest {
     }
 
     @Test
-    public void nonStandardLocationMigration() throws SQLException {
+    public void nonStandardLocationMigration() {
         BQRuntime runtime = testFactory
             .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
             .autoLoadModules()
