@@ -1,3 +1,6 @@
+## 0.25
+* #4 Upgrade to Flyway 5.0.0
+
 ## 0.3
 
 * #3 Upgrade to BQ 0.23, BQ-Jdbc 0.15, BQ-Logback 0.15

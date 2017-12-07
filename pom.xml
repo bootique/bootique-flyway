@@ -24,7 +24,7 @@
 
     <properties>
         <bootique-version>${project.version}</bootique-version>
-        <flyway-version>4.0.3</flyway-version>
+        <flyway-version>5.0.0</flyway-version>
         <h2-version>1.4.193</h2-version>
     </properties>
 
