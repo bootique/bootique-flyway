@@ -1,23 +1,27 @@
 language: java
 
-jdk:
-  - oraclejdk8
-  - oraclejdk9
-
-branches:
-  only:
-    - master
-
-script:
-  - mvn clean verify
-
 jobs:
   include:
-    - stage: deploy
-      if: branch = master
+    - stage: build
+      if: branch != master OR type IN (pull_request)
+      jdk: oraclejdk9
+      script:
+        - mvn clean verify
+    - stage: build
+      if: branch != master OR type IN (pull_request)
       jdk: oraclejdk8
       script:
-        - 'if [ "$TRAVIS_SECURE_ENV_VARS" = "true" ]; then mvn clean source:jar javadoc:javadoc deploy --settings travis_settings.xml; fi'
+        - mvn clean verify
+    - stage: build
+      if: branch = master AND type IN (push)
+      jdk: oraclejdk9
+      script:
+        - mvn clean verify
+    - stage: build
+      if: branch = master AND type IN (push)
+      jdk: oraclejdk8
+      script:
+        - mvn clean source:jar javadoc:javadoc deploy --settings travis_settings.xml
 
 # travis encrypt -r bootique/bootique-flyway "CI_DEPLOY_USERNAME='name'"
 # travis encrypt -r bootique/bootique-flyway "CI_DEPLOY_PASSWORD='password'"
