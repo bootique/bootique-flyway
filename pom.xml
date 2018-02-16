@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>0.7</version>
+        <version>0.8</version>
     </parent>
 
     <groupId>io.bootique.flyway</groupId>
@@ -24,7 +24,7 @@
 
     <properties>
         <bootique-version>${project.version}</bootique-version>
-        <flyway-version>5.0.0</flyway-version>
+        <flyway-version>5.0.7</flyway-version>
         <h2-version>1.4.193</h2-version>
     </properties>
 
