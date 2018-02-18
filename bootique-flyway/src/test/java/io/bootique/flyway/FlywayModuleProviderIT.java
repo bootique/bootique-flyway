@@ -14,8 +14,8 @@ public class FlywayModuleProviderIT {
     public BQTestFactory testFactory = new BQTestFactory();
 
     @Test
-    public void testPresentInJar() {
-        BQModuleProviderChecker.testPresentInJar(FlywayModuleProvider.class);
+    public void testAutoLoadable() {
+        BQModuleProviderChecker.testAutoLoadable(FlywayModuleProvider.class);
     }
 
     @Test
