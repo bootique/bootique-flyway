@@ -10,7 +10,7 @@
 
     <groupId>io.bootique.flyway</groupId>
     <artifactId>bootique-flyway-parent</artifactId>
-    <version>0.25-SNAPSHOT</version>
+    <version>0.25</version>
     <packaging>pom</packaging>
 
     <name>bootique-flyway-parent: Parent of Flyway/Bootique integration</name>
@@ -31,7 +31,7 @@
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/bootique/bootique-flyway</developerConnection>
         <url>https://github.com/bootique/bootique-flyway</url>
-        <tag>HEAD</tag>
+        <tag>bootique-flyway-parent-0.25</tag>
     </scm>
 
     <distributionManagement>
