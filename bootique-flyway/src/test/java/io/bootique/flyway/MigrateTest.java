@@ -63,6 +63,7 @@ public class MigrateTest {
         assertEquals("Test", row.get(0)[1]);
         assertEquals(2, row.get(1)[0]);
         assertEquals("Test 2", row.get(1)[1]);
-        assertEquals(2, a.getRowCount());
+
+        a.matcher().assertMatches(2);
     }
 }
