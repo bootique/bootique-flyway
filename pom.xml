@@ -5,7 +5,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>0.8</version>
+        <version>0.10</version>
     </parent>
 
     <groupId>io.bootique.flyway</groupId>
@@ -23,9 +23,9 @@
     </modules>
 
     <properties>
-        <bootique-version>${project.version}</bootique-version>
-        <flyway-version>5.0.7</flyway-version>
-        <h2-version>1.4.193</h2-version>
+        <bootique.version>${project.version}</bootique.version>
+        <flyway.version>5.0.7</flyway.version>
+        <h2.version>1.4.193</h2.version>
     </properties>
 
     <scm>
@@ -47,32 +47,32 @@
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique</groupId>
                 <artifactId>bootique-test</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
                 <artifactId>bootique-jdbc</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
                 <artifactId>bootique-jdbc-tomcat</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique.logback</groupId>
                 <artifactId>bootique-logback</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
-                <version>${flyway-version}</version>
+                <version>${flyway.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -82,12 +82,12 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>${h2-version}</version>
+                <version>${h2.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
                 <artifactId>bootique-jdbc-test</artifactId>
-                <version>${bootique-version}</version>
+                <version>${bootique.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
