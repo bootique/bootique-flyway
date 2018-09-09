@@ -1,3 +1,7 @@
+## 0.26
+
+* #7 Upgrade to Flyway 5.1.x
+
 ## 0.25
 
 * #5 Upgrade to bootique-modules-parent 0.8 

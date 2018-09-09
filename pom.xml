@@ -43,7 +43,7 @@
 
     <properties>
         <bootique.version>${project.version}</bootique.version>
-        <flyway.version>5.0.7</flyway.version>
+        <flyway.version>5.1.4</flyway.version>
         <h2.version>1.4.193</h2.version>
     </properties>
 
