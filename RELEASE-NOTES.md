@@ -1,4 +1,4 @@
-## 0.26
+## 1.0.RC1
 
 * #7 Upgrade to Flyway 5.1.x
 
