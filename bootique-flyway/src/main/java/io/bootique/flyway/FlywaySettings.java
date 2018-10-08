@@ -29,7 +29,7 @@ public class FlywaySettings {
 
     public FlywaySettings(List<DataSource> dataSources, List<String> locations) {
         this.dataSources = Collections.unmodifiableList(dataSources);
-        this.locations = locations.toArray(new String[locations.size()]);
+        this.locations = locations.toArray(new String[0]);
     }
 
     public List<DataSource> getDataSources() {
