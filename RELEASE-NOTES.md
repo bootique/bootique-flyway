@@ -1,3 +1,7 @@
+## 1.0.RC2
+
+* #8 Remove usage of deprecated API
+
 ## 1.0.RC1
 
 * #7 Upgrade to Flyway 5.2.x

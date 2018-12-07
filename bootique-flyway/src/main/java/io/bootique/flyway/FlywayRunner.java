@@ -56,9 +56,10 @@ public class FlywayRunner {
 
     private void forEach(Consumer<Flyway> flywayConsumer) {
         settings.getDataSources().forEach(ds -> {
-            Flyway flyway = new Flyway();
-            flyway.setLocations(settings.getLocations());
-            flyway.setDataSource(ds);
+            Flyway flyway = new Flyway(Flyway.configure()
+                    .locations(settings.getLocations())
+                    .dataSource(ds)
+            );
             flywayConsumer.accept(flyway);
         });
     }
