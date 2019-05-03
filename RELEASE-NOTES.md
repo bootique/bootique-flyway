@@ -1,4 +1,4 @@
-## 1.0.RC2
+## 1.0
 
 * #8 Remove usage of deprecated API
 
