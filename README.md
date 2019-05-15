@@ -36,7 +36,7 @@ See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bo
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>1.0.RC1</version>
+            <version>1.0</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -51,7 +51,7 @@ See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bo
 
 **Gradle**
 ```groovy
-compile("io.bootique.flyway:bootique-flyway:1.0.RC1")
+compile("io.bootique.flyway:bootique-flyway:1.0")
 ```
 
 *Note:* **bootique-flyway** is a part of [bootique-bom](https://github.com/bootique/bootique-bom), and version can be 
