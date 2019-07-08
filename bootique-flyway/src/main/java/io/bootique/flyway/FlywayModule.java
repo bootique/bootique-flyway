@@ -49,10 +49,8 @@ public class FlywayModule extends ConfigModule {
     }
 
     @Provides
-    public FlywaySettings createFlywayDataSources(ConfigurationFactory configurationFactory,
-                                                  DataSourceFactory dataSourceFactory) {
-        return configurationFactory
-                .config(FlywayFactory.class, configPrefix).createDataSources(dataSourceFactory);
+    public FlywaySettings createFlywayDataSources(ConfigurationFactory configFactory, DataSourceFactory dataSourceFactory) {
+        return config(FlywayFactory.class, configFactory).createDataSources(dataSourceFactory);
     }
 
     @Provides
