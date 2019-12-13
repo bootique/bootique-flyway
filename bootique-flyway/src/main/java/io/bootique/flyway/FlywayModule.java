@@ -19,11 +19,11 @@
 
 package io.bootique.flyway;
 
-import com.google.inject.Binder;
-import com.google.inject.Provides;
 import io.bootique.BQCoreModule;
 import io.bootique.ConfigModule;
 import io.bootique.config.ConfigurationFactory;
+import io.bootique.di.Binder;
+import io.bootique.di.Provides;
 import io.bootique.flyway.command.BaselineCommand;
 import io.bootique.flyway.command.CleanCommand;
 import io.bootique.flyway.command.InfoCommand;

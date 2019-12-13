@@ -19,8 +19,8 @@
 
 package io.bootique.flyway;
 
-import com.google.inject.Module;
 import io.bootique.BQModuleProvider;
+import io.bootique.di.BQModule;
 import io.bootique.jdbc.JdbcModuleProvider;
 
 import java.lang.reflect.Type;
@@ -31,7 +31,7 @@ import java.util.Map;
 public class FlywayModuleProvider implements BQModuleProvider {
 
     @Override
-    public Module module() {
+    public BQModule module() {
         return new FlywayModule();
     }
 
