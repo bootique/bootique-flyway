@@ -60,10 +60,10 @@ imported from there.
 
 ## Available commands
 
-Flyway is based around just 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair. They are presented in 
-Bootique-Flyway module.
+### FLYWAY COMMANDS AS OPTIONS
 
-### FLYWAY OPTIONS
+Flyway is based around just 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair. They are represented in 
+the Bootique-Flyway module as command line options.
 
 ```
   -b, --baseline
@@ -87,6 +87,9 @@ Bootique-Flyway module.
 
 ### BOOTIQUE OPTIONS
 
+The standard Bootique command line options you may need:
+
+
 ```
   -c yaml_location, --config=yaml_location
            Specifies YAML config location, which can be a classpath (prefixed by classpath:), file path or a URL.
@@ -98,9 +101,9 @@ Bootique-Flyway module.
 
 ## Configuration
 
-### YAML file
+### YAML configuration file
 
-You may specify classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml as the YAML config file:
+As an example here a YAML test config file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml.
 
 
 ```
@@ -129,9 +132,12 @@ Using custom config files allows you to more easily run Flyway using a file
 for database connection settings (the Bootique YAML file) and application
 settings in a Flyway file.
 
-### Flyway file
+In this example the locations property (with bogus as a non-existent location)
+is superseded by the settings in the Flyway configuration file.
 
-You may use classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf as the Flyway configuration file.
+### Flyway configuration file
+
+As an example here a Flyway test configuration file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf.
 
 
 ```
