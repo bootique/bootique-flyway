@@ -53,9 +53,9 @@ public class MigrateTest {
     }
 
     @Test
-    public void defaultExplicitMigration() {
+    public void explicitDefaultMigration() {
         BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
+            .app("--config=classpath:io/bootique/flyway/explicitDefaultMigration.yml", "--migrate")
             .autoLoadModules()
             .createRuntime();
 
@@ -63,15 +63,25 @@ public class MigrateTest {
     }
 
     @Test
-    public void nonStandardLocationMigration() {
+    public void explicitNonDefaultMigration() {
         BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/expilicitDefaultMigration.yml", "--migrate")
+            .app("--config=classpath:io/bootique/flyway/explicitNonDefaultMigration.yml", "--migrate")
             .autoLoadModules()
             .createRuntime();
 
         testMigrateCommand(runtime);
     }
 
+    @Test
+    public void explicitNonDefaultMigrationConfigfile() {
+        BQRuntime runtime = testFactory
+            .app("--config=classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml", "--migrate")
+            .autoLoadModules()
+            .createRuntime();
+
+        testMigrateCommand(runtime);
+    }
+    
     private void testMigrateCommand(BQRuntime runtime) {
         CommandOutcome result = runtime.run();
         assertTrue(result.isSuccess());

@@ -20,14 +20,17 @@
 package path.migration;
 
 import db.migration.V2__Update_table;
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+//import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.JavaMigration;
+import org.flywaydb.core.api.migration.Context;
 
 import java.sql.Connection;
 
-public class V2__Update_table_nonDefault implements JdbcMigration {
+public class V2__Update_table_nonDefault extends BaseJavaMigration implements JavaMigration {
 
     @Override
-    public void migrate(Connection connection) {
-        new V2__Update_table().migrate(connection);
+    public void migrate(Context context) {
+        new V2__Update_table().migrate(context);
     }
 }

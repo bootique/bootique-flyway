@@ -59,6 +59,7 @@ public class FlywayRunner {
             Flyway flyway = new Flyway(Flyway.configure()
                     .locations(settings.getLocations())
                     .dataSource(ds)
+                    .configuration(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
             );
             flywayConsumer.accept(flyway);
         });

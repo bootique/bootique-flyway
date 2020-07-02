@@ -19,17 +19,29 @@
 
 package io.bootique.flyway;
 
+import io.bootique.resource.ResourceFactory;
+
 import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.io.*;
+import java.net.URL;
+
+import org.flywaydb.core.internal.configuration.ConfigUtils;
 
 public class FlywaySettings {
     private final List<DataSource> dataSources;
     private final String[] locations;
+    private final String[] configFiles; // list of config files to use
 
-    public FlywaySettings(List<DataSource> dataSources, List<String> locations) {
+    public FlywaySettings(List<DataSource> dataSources,
+                          List<String> locations,
+                          List<String> configFiles) {
         this.dataSources = Collections.unmodifiableList(dataSources);
         this.locations = locations.toArray(new String[0]);
+        this.configFiles = configFiles.toArray(new String[0]);
     }
 
     public List<DataSource> getDataSources() {
@@ -38,5 +50,24 @@ public class FlywaySettings {
 
     public String[] getLocations() {
         return locations;
+    }
+
+    public java.util.Map<java.lang.String,java.lang.String> getProperties() {
+        Map<String, String> config = new HashMap<String, String>();
+
+        try {
+            for (String file : this.configFiles) {
+                URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
+                
+                Reader reader = new InputStreamReader(url.openStream());
+                config.putAll(ConfigUtils.loadConfigurationFromReader(reader));
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ConfigUtils.dumpConfiguration(config);
+
+        return config;
     }
 }

@@ -61,10 +61,11 @@ imported from there.
 ## Available commands
 
 Flyway is based around just 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair. They are presented in 
-Bootique-Flyway module:
+Bootique-Flyway module.
+
+### FLYWAY OPTIONS
 
 ```
-OPTIONS
   -b, --baseline
        Baselines an existing database, excluding all migrations up to and including baselineVersion.
 
@@ -82,6 +83,59 @@ OPTIONS
 
   -v, --validate
        Validate applied migrations against resolved ones (on the filesystem or classpath) to detect accidental changes that may prevent the schema(s) from being recreated exactly.
+```
+
+### BOOTIQUE OPTIONS
+
+```
+  -c yaml_location, --config=yaml_location
+           Specifies YAML config location, which can be a classpath (prefixed by classpath:), file path or a URL.
+
+  -H, --help-config
+           Prints information about application modules and their configuration
+           options.
+```
+
+## Configuration
+
+### YAML file
+
+You may specify classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml as the YAML config file:
+
+
+```
+jdbc:
+  test:
+    url: jdbc:h2:mem:defaultMigration
+    username: bogus
+    password: bogus
+    driverClassName: org.h2.Driver
+
+flyway:
+  locations:
+    - bogus
+  configFiles:
+    - classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf
+  dataSources:
+    - test
+```
+
+Only three flyway options are recognized:
+- locations: a list of Flyway locations to look for Flyway migrations
+- configFiles: a list of Flyway configuraton files (as custom config files, see https://flywaydb.org/documentation/commandline/)
+- dataSources: a list of JDBC connections
+
+Using custom config files allows you to more easily run Flyway using a file
+for database connection settings (the Bootique YAML file) and application
+settings in a Flyway file.
+
+### Flyway file
+
+You may use classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf as the Flyway configuration file.
+
+
+```
+flyway.locations = path/migration
 ```
 
 ## Example Project
