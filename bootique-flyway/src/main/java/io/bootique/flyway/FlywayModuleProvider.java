@@ -19,6 +19,7 @@
 
 package io.bootique.flyway;
 
+import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
 import io.bootique.di.BQModule;
 import io.bootique.jdbc.JdbcModuleProvider;
@@ -43,5 +44,12 @@ public class FlywayModuleProvider implements BQModuleProvider {
     @Override
     public Collection<BQModuleProvider> dependencies() {
         return Collections.singletonList(new JdbcModuleProvider());
+    }
+
+    @Override
+    public BQModuleMetadata.Builder moduleBuilder() {
+        return BQModuleProvider.super
+            .moduleBuilder()
+            .description("Provides database migrations based on the Flyway library.");
     }
 }
