@@ -66,13 +66,15 @@ public class FlywayRunner {
 
             MigrationVersion schemaVersionToOutput = currentSchemaVersion == null ? MigrationVersion.EMPTY : currentSchemaVersion;
            
-            final Logger LOGGER = LoggerFactory.getLogger(FlywayRunner.class);
-            
-            LOGGER.info("Schema version: " + schemaVersionToOutput);
-            LOGGER.info("");
+            final Logger logger = LoggerFactory.getLogger(FlywayRunner.class);
 
-            for (String line : MigrationInfoDumper.dumpToAsciiTable(info.all()).split("\\r?\\n")) {
-                LOGGER.info(line);
+            if(logger.isInfoEnabled()) {
+                logger.info("Schema version: " + schemaVersionToOutput);
+                logger.info("");
+
+                for (String line : MigrationInfoDumper.dumpToAsciiTable(info.all()).split("\\r?\\n")) {
+                    logger.info(line);
+                }
             }
         });
     }
