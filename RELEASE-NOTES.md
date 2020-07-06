@@ -1,3 +1,7 @@
+## 2.0
+
+* #9 Upgrade to Flyway 6.5.0 with the ability to read Flyway configuration files
+
 ## 1.0.RC2
 
 * #8 Remove usage of deprecated API

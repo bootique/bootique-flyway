@@ -20,12 +20,9 @@
 package path.migration;
 
 import db.migration.V2__Update_table;
-//import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.flywaydb.core.api.migration.BaseJavaMigration;
-import org.flywaydb.core.api.migration.JavaMigration;
 import org.flywaydb.core.api.migration.Context;
-
-import java.sql.Connection;
+import org.flywaydb.core.api.migration.JavaMigration;
 
 public class V2__Update_table_nonDefault extends BaseJavaMigration implements JavaMigration {
 
