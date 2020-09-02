@@ -21,17 +21,25 @@ package io.bootique.flyway;
 
 import io.bootique.resource.ResourceFactory;
 
-import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.io.*;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import javax.sql.DataSource;
 
+import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.internal.configuration.ConfigUtils;
+import org.flywaydb.core.internal.util.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FlywaySettings {
+    private static Logger logger = LoggerFactory.getLogger(FlywayRunner.class);
+
     private final List<DataSource> dataSources;
     private final String[] locations;
     private final String[] configFiles; // list of config files to use
@@ -55,19 +63,35 @@ public class FlywaySettings {
     public java.util.Map<java.lang.String,java.lang.String> getProperties() {
         Map<String, String> config = new HashMap<String, String>();
 
-        try {
-            for (String file : this.configFiles) {
-                URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
+        for (String file : this.configFiles) {
+            final String errorMessage = "Unable to load config file: " + file;
+
+            try {
+                final URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
+                final Reader reader = new InputStreamReader(url.openStream());
                 
-                Reader reader = new InputStreamReader(url.openStream());
                 config.putAll(ConfigUtils.loadConfigurationFromReader(reader));
+            } catch(IOException e) {
+                throw new FlywayException(errorMessage, e);
             }
-        } catch(IOException e) {
-            throw new RuntimeException(e);
         }
 
-        ConfigUtils.dumpConfiguration(config);
+        dumpConfiguration(config);
 
         return config;
+    }
+
+    /**
+     * Dumps the configuration to the console when debug output is activated.
+     *
+     * @param config The configured properties.
+     */
+    private static void dumpConfiguration(Map<String, String> config) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Using configuration:");
+            for (Map.Entry<String, String> entry : new TreeMap<>(config).entrySet()) {
+                logger.debug(entry.getKey() + " -> " + entry.getValue());
+            }
+        }
     }
 }

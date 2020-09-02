@@ -21,20 +21,27 @@ package io.bootique.flyway;
 
 import io.bootique.resource.ResourceFactory;
 
-import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Properties;
 import java.io.*;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.TreeMap;
+import javax.sql.DataSource;
 
 import org.flywaydb.core.api.FlywayException;
-import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.flywaydb.core.internal.configuration.ConfigUtils;
+import org.flywaydb.core.internal.util.FileCopyUtils;
+import org.flywaydb.core.internal.util.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FlywaySettings {
+    private static Logger logger = LoggerFactory.getLogger(FlywayRunner.class);
+
     private final List<DataSource> dataSources;
     private final String[] locations;
     private final String[] configFiles; // list of config files to use
@@ -60,21 +67,19 @@ public class FlywaySettings {
 
         try {
             for (String file : this.configFiles) {
-                URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
-
-                Reader reader = new InputStreamReader(url.openStream());
+                final String errorMessage = "Unable to load config file: " + file;
+                final URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
+                final Reader reader = new InputStreamReader(url.openStream());
                 
                 // loadConfigurationFromReader() only available for Flyway 6
                 // config.putAll(ConfigUtils.loadConfigurationFromReader(reader));
-
-                String errorMessage = "Unable to load config file: " + file;
 
                 try {
                     String contents = FileCopyUtils.copyToString(reader);
                     Properties properties = new Properties();
                     properties.load(new StringReader(contents.replace("\\", "\\\\")));
-                    return ConfigUtils.propertiesToMap(properties);
-                } catch (IOException e) {
+                    config.putAll(ConfigUtils.propertiesToMap(properties));
+                } catch(IOException e) {
                     throw new FlywayException(errorMessage, e);
                 }
             }
@@ -82,6 +87,22 @@ public class FlywaySettings {
             throw new RuntimeException(e);
         }
 
+        dumpConfiguration(config);
+
         return config;
+    }
+
+    /**
+     * Dumps the configuration to the console when debug output is activated.
+     *
+     * @param config The configured properties.
+     */
+    private static void dumpConfiguration(Map<String, String> config) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Using configuration:");
+            for (Map.Entry<String, String> entry : new TreeMap<>(config).entrySet()) {
+                logger.debug(entry.getKey() + " -> " + entry.getValue());
+            }
+        }
     }
 }

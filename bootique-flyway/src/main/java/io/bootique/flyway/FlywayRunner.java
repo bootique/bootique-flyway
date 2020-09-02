@@ -20,16 +20,19 @@
 package io.bootique.flyway;
 
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.MigrationInfoService;
 import org.flywaydb.core.api.MigrationInfo;
+import org.flywaydb.core.api.MigrationInfoService;
 import org.flywaydb.core.api.MigrationVersion;
+import org.flywaydb.core.internal.info.MigrationInfoDumper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.flywaydb.core.internal.info.MigrationInfoDumper;
 
 import java.util.function.Consumer;
 
 public class FlywayRunner {
+    private static Logger logger = LoggerFactory.getLogger(FlywayRunner.class);
+
     private final FlywaySettings settings;
 
     public FlywayRunner(FlywaySettings settings) {
@@ -66,8 +69,6 @@ public class FlywayRunner {
 
             MigrationVersion schemaVersionToOutput = currentSchemaVersion == null ? MigrationVersion.EMPTY : currentSchemaVersion;
            
-            final Logger logger = LoggerFactory.getLogger(FlywayRunner.class);
-
             if(logger.isInfoEnabled()) {
                 logger.info("Schema version: " + schemaVersionToOutput);
                 logger.info("");
@@ -90,6 +91,7 @@ public class FlywayRunner {
                     .dataSource(ds)
                     .configuration(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
             );
+            
             flywayConsumer.accept(flyway);
         });
     }
