@@ -69,14 +69,17 @@ public class FlywaySettings {
             try {
                 final URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
                 final Reader reader = new InputStreamReader(url.openStream());
-                
-                config.putAll(ConfigUtils.loadConfigurationFromReader(reader));
+
+                final Map<String, String> fileConfig = ConfigUtils.loadConfigurationFromReader(reader);
+
+                config.putAll(fileConfig);
+                dumpConfiguration(fileConfig, file);
             } catch(IOException e) {
                 throw new FlywayException(errorMessage, e);
             }
         }
 
-        dumpConfiguration(config);
+        dumpConfiguration(config, "ALL");
 
         return config;
     }
@@ -85,10 +88,11 @@ public class FlywaySettings {
      * Dumps the configuration to the console when debug output is activated.
      *
      * @param config The configured properties.
+     * @param resource  The config file resource.
      */
-    private static void dumpConfiguration(Map<String, String> config) {
+    private static void dumpConfiguration(Map<String, String> config, String resource) {
         if (logger.isDebugEnabled()) {
-            logger.debug("Using configuration:");
+            logger.debug("Using configuration resource " + resource);
             for (Map.Entry<String, String> entry : new TreeMap<>(config).entrySet()) {
                 logger.debug(entry.getKey() + " -> " + entry.getValue());
             }
