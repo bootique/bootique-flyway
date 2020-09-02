@@ -122,40 +122,5 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-          <activation>
-            <property>
-              <name>flyway.version</name>
-              <value>5.1.4</value>
-            </property>
-          </activation>
-          <build>
-            <plugins>
-              <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                  <execution>
-                    <id>copy-resources</id>
-                    <!-- here the phase you need -->
-                    <phase>validate</phase>
-                    <goals>
-                      <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                      <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
-                      <resources>          
-                        <resource>
-                          <directory>src/non-packaged-resources</directory>
-                          <filtering>true</filtering>
-                        </resource>
-                      </resources>              
-                    </configuration>            
-                  </execution>
-                </executions>
-              </plugin>
-            </plugins>
-          </build>
-        </profile>
     </profiles>
 </project>
