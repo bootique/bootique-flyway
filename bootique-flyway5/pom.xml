@@ -27,16 +27,16 @@
         <version>2.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bootique-flyway</artifactId>
+    <artifactId>bootique-flyway5</artifactId>
     <packaging>jar</packaging>
 
-    <name>bootique-flyway: Flyway Integration with Bootique</name>
+    <name>bootique-flyway: Flyway5 Integration with Bootique</name>
     <description>
-        Provides Flyway integration with Bootique.
+        Provides Flyway5 integration with Bootique.
     </description>
 
     <properties>
-        <flyway.version>6.5.0</flyway.version>
+        <flyway.version>5.1.4</flyway.version> <!-- latest version that supports Oracle 12.1 -->
     </properties>
     
     <dependencies>
@@ -121,6 +121,41 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+          <activation>
+            <property>
+              <name>flyway.version</name>
+              <value>5.1.4</value>
+            </property>
+          </activation>
+          <build>
+            <plugins>
+              <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                  <execution>
+                    <id>copy-resources</id>
+                    <!-- here the phase you need -->
+                    <phase>validate</phase>
+                    <goals>
+                      <goal>copy-resources</goal>
+                    </goals>
+                    <configuration>
+                      <outputDirectory>${basedir}/target/extra-resources</outputDirectory>
+                      <resources>          
+                        <resource>
+                          <directory>src/non-packaged-resources</directory>
+                          <filtering>true</filtering>
+                        </resource>
+                      </resources>              
+                    </configuration>            
+                  </execution>
+                </executions>
+              </plugin>
+            </plugins>
+          </build>
         </profile>
     </profiles>
 </project>
