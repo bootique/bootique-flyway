@@ -44,6 +44,7 @@
 
     <properties>
         <bootique.version>${project.version}</bootique.version>
+        <flyway.version>6.5.5</flyway.version>
         <h2.version>1.4.200</h2.version>
     </properties>
 
