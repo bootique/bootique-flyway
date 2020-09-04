@@ -37,6 +37,7 @@
 
     <properties>
         <flyway.version>6.5.0</flyway.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     </properties>
     
     <dependencies>
@@ -123,4 +124,22 @@
             </build>
         </profile>
     </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>

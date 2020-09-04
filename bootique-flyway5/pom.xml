@@ -61,6 +61,11 @@
             <artifactId>slf4j-api</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>io.bootique.flyway</groupId>
+            <artifactId>bootique-flyway</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
 
         <!-- Unit test dependencies -->
         <dependency>
@@ -96,6 +101,14 @@
         <dependency>
             <groupId>io.bootique.logback</groupId>
             <artifactId>bootique-logback</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.bootique.flyway</groupId>
+            <artifactId>bootique-flyway</artifactId>
+            <version>${project.parent.version}</version>
+            <classifier>tests</classifier>
+            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
     </dependencies>
