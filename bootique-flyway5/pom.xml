@@ -27,16 +27,16 @@
         <version>2.0.B1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bootique-flyway</artifactId>
+    <artifactId>bootique-flyway5</artifactId>
     <packaging>jar</packaging>
 
-    <name>bootique-flyway: Flyway Integration with Bootique</name>
+    <name>bootique-flyway: Flyway5 Integration with Bootique</name>
     <description>
-        Provides Flyway integration with Bootique.
+        Provides Flyway5 integration with Bootique.
     </description>
 
     <properties>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <flyway.version>5.1.4</flyway.version> <!-- latest version that supports Oracle 12.1 -->
     </properties>
     
     <dependencies>
@@ -60,6 +60,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.bootique.flyway</groupId>
+            <artifactId>bootique-flyway</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
 
         <!-- Unit test dependencies -->
@@ -98,6 +103,14 @@
             <artifactId>bootique-logback</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.bootique.flyway</groupId>
+            <artifactId>bootique-flyway</artifactId>
+            <version>${project.parent.version}</version>
+            <classifier>tests</classifier>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <!-- Optional profile used to sign artifacts -->
@@ -123,22 +136,4 @@
             </build>
         </profile>
     </profiles>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven-jar-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    
 </project>

@@ -27,11 +27,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.TreeMap;
 import javax.sql.DataSource;
 
 import org.flywaydb.core.api.FlywayException;
 import org.flywaydb.core.internal.configuration.ConfigUtils;
+import org.flywaydb.core.internal.util.FileCopyUtils;
 import org.flywaydb.core.internal.util.StringUtils;
 
 import org.slf4j.Logger;
@@ -69,9 +71,17 @@ public class FlywaySettings {
             try {
                 final URL url = new ResourceFactory(file).getUrl(); // file may have classpath: as a prefix
                 final Reader reader = new InputStreamReader(url.openStream());
+                
+                // loadConfigurationFromReader() only available for Flyway 6
+                // config.putAll(ConfigUtils.loadConfigurationFromReader(reader));
+                    
+                final String contents = FileCopyUtils.copyToString(reader);
+                final Properties properties = new Properties();
+                    
+                properties.load(new StringReader(contents.replace("\\", "\\\\")));
 
-                final Map<String, String> fileConfig = ConfigUtils.loadConfigurationFromReader(reader);
-
+                final Map<String, String> fileConfig = ConfigUtils.propertiesToMap(properties);
+                        
                 config.putAll(fileConfig);
                 dumpConfiguration(fileConfig, file);
             } catch(IOException e) {

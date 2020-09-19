@@ -23,6 +23,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.flywaydb.core.api.MigrationInfoService;
 import org.flywaydb.core.api.MigrationVersion;
+import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.flywaydb.core.internal.info.MigrationInfoDumper;
 
 import org.slf4j.Logger;
@@ -57,12 +58,14 @@ public class FlywayRunner {
 
     public void info() {
         settings.getDataSources().forEach(ds -> {
-            Flyway flyway = new Flyway(Flyway.configure()
+            FluentConfiguration configuration = new FluentConfiguration();
+
+            Flyway flyway = new Flyway(configuration
                     .locations(settings.getLocations())
                     .dataSource(ds)
-                    .configuration(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
+                    .configure(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
             );
-
+            
             MigrationInfoService info = flyway.info();
             MigrationInfo current = info.current();
             MigrationVersion currentSchemaVersion = current == null ? MigrationVersion.EMPTY : current.getVersion();
@@ -86,10 +89,12 @@ public class FlywayRunner {
 
     private void forEach(Consumer<Flyway> flywayConsumer) {
         settings.getDataSources().forEach(ds -> {
-            Flyway flyway = new Flyway(Flyway.configure()
+            FluentConfiguration configuration = new FluentConfiguration();
+
+            Flyway flyway = new Flyway(configuration
                     .locations(settings.getLocations())
                     .dataSource(ds)
-                    .configuration(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
+                    .configure(settings.getProperties()) // takes precedence over location settings (do not use jdbc connection details though in a Flyway configuration file)
             );
             
             flywayConsumer.accept(flyway);

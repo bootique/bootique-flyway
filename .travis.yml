@@ -36,3 +36,13 @@ env:
   global:
     - secure: "t/DJwSV2TUQ2OxZBqDhWl1noCYqJkWGngSvcWMct5z4gcuNScg5Pw5ylBzNCl43lF045X9nOJdY40uH2UyNd1nwNW1XNehuJCgijU3rFX1xl/7rAq52B4FpECQhrwwzInpa5um/84Uwl61GghKqyFbxyGuxq7jzFSQl1vPmBuRdbKkkufr5APcIu5Ger9b1E7T9Crkcpv/u624T2Zz8Hxb8ezemAOK8fW9rTGLx044bjhCpubXoeYXdIuzKd0LxK5pop4ozoGZ5/L3DVB5JhXMrXi99Gjf+BPdiLTCChenU6H6kaqP//lOYRseRsn7kMT1i9zt5lfmn3udFgTekRjSDcz9YFwls/OjAo7rT0i8g7Rq68DiNJKojcKTB7Pp5j+PNVXru+QljvY/oFAfkWBUukKLemNALli2taStaXlfvRHeb+d5AnCPalwwOfNm6nkQJzkDxTxD6UlGj4IzTYQ1oxoAxkw7AIxKu9yp6zTgYX0OXHaioAdnpVYFUq9nIMUWVts957DVNHMTAbjXchyaG9Gsv8gE0iQN7hURhWnmrS+bQnWVlhrUYuIyavbDXVvHSzycEU59PNfGUFK+x7XujhWosmE6kHbSgJxZAF4SGxzCJpxOqrJTWjgYKgPwZ4yg2OFiQ04u8umqsFxHjvh02e9iG3OAA2l9F0L5A6jA8="
     - secure: "CdB/iOvwr1UmoFn762u2vgru4J7Hyn+YO0KjWooe6k0VD6TNm7HIWYXyGSH/J3chO5BdzYv2TxnWFHaeTMq+84+MIBp/TfV3UfSX8pMuspvfqFtNcj7l2HCt9WJ95t4zvwyJjSR5lN6C2LIGrkztkx65uPi6SXqJUJnswMwjeftFfChTh05JprdZ5V8T/ArJzGLmy+EgqaNYR2lwtYUNf8MudTZgri9vVkECeO2c+V0/ELW5/+L/Qb1XnLcubPvMVfrxhuer8+YjLTDusjnIj9iwuLU5+kZM7uoAJDqLKHSSvruEtz2lMLNooEnINkJanNiRvpkfHLojJz0dAebdiuU47yz4Qpg1XFPGHwjDJvO0uL+C+DwGmKZ3kuWug+d6/5HtAcsSntdHxQhG0CoN48k7GkITTAdiTLmnzG+FBmUHswFP8bFZr24srMOuzWzCRr+xsKp93XWDHY+I93FnsBIEwWkqWjuwQUuEDv/6CGxRrdTk1Q8z/b6Ex/973cKFXRUnhwjQ2cBo+bScfRmUaMJBYSbY1yVGMDCyRtcpTClnhlzuQbXNVHxRMvREidRZkqM0C+LcERfHVzMaQ2QatYw1F0WCFSl8J5gjDNMwtHz0GU9t5gvLr7hogk2Jl8baBEI3LvkbANNz/mLP2oid4bZQmkmw9krQFZc/esLWFMI="
+
+# to be able to see where it goes wrong (see also https://github.com/travis-ci/travis-ci/issues/6018)
+after_failure:
+  - echo == Begin of test log(s) ==
+  - for f in $(find . -name test.log); do echo "test log: $f"; cat $f; sleep 1; done
+  - echo == End of test log(s) ==
+
+# give some time to spool the output
+after_script:
+  - sleep 1
