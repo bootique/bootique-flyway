@@ -17,7 +17,7 @@
   under the License.
   -->
 
-[![Build Status](https://travis-ci.org/bootique/bootique-flyway.svg)](https://travis-ci.org/bootique/bootique-flyway)
+[![build test deploy](https://github.com/bootique/bootique-flyway/actions/workflows/maven.yml/badge.svg)](https://github.com/bootique/bootique-flyway/actions/workflows/maven.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.bootique.flyway/bootique-flyway.svg?colorB=brightgreen)](https://search.maven.org/artifact/io.bootique.flyway/bootique-flyway/)
 
 # bootique-flyway
