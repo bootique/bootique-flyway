@@ -36,7 +36,7 @@ See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bo
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>2.0.M1</version>
+            <version>2.0.B1</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
