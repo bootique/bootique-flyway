@@ -29,10 +29,3 @@ log:
   loggers:
     io.bootique.flyway:
       level: info
-      appenderRefs:
-        - test
-  appenders:
-    - type: file
-      name: test
-      logFormat: '%c{20}: %m%n'
-      file: target/test.log
