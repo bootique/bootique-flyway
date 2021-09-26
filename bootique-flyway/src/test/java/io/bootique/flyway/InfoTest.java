@@ -19,23 +19,16 @@
 
 package io.bootique.flyway;
 
-import io.bootique.BQRuntime;
 import io.bootique.command.CommandOutcome;
 import io.bootique.test.junit.BQTestFactory;
+import io.bootique.test.junit.TestIO;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Tests for info command.
- *
- * @author Gert-Jan Paulissen
- */
 public class InfoTest {
 
     @Rule
@@ -43,71 +36,53 @@ public class InfoTest {
 
     @Test
     public void verifyInfoMessage() {
-        BQRuntime runtime;
-        
-        testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--clean")
-            .autoLoadModules()
-            .run();
-        
-        runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
-            .autoLoadModules()
-            .createRuntime();
 
-        testInfoCommand(runtime, 1);
-        
-        testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--migrate")
-            .autoLoadModules()
-            .run();
+        runCommand("--clean");
+        String afterCleanLog = runCommand("--info");
+        assertLogContains(afterCleanLog,
+                "^.*| Category  | Version | Description  | Type | Installed On | State   |$",
+                "^.*| Versioned | 1       | Init         | SQL  |              | Pending |$",
+                "^.*| Versioned | 2       | Update table | JDBC |              | Pending |$");
 
-        runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
-            .autoLoadModules()
-            .createRuntime();
-
-        testInfoCommand(runtime, 2);
-    }
-    
-    private void testInfoCommand(BQRuntime runtime, int which) {
-        CommandOutcome result = runtime.run();
-        assertTrue(result.isSuccess());
-
-        if (which == 1) {
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
-            assertTrue(textFoundInLogFile("| Category  | Version | Description  | Type | Installed On | State   |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
-            assertTrue(textFoundInLogFile("| Versioned | 1       | Init         | SQL  |              | Pending |"));
-            assertTrue(textFoundInLogFile("| Versioned | 2       | Update table | JDBC |              | Pending |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
-        } else {
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
-            assertTrue(textFoundInLogFile("| Category  | Version | Description  | Type | Installed On        | State   |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
-            assertTrue(textFoundInLogFile("| Versioned | 1       | Init         | SQL  | .......... ........ | Success |"));
-            assertTrue(textFoundInLogFile("| Versioned | 2       | Update table | JDBC | .......... ........ | Success |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
-        }
+        runCommand("--migrate");
+        String afterMigrateLog = runCommand("--info");
+        assertLogContains(afterMigrateLog,
+                "^.*| Category  | Version | Description  | Type | Installed On        | State   |$",
+                "^.*| Versioned | 1       | Init         | SQL  | .......... ........ | Success |$",
+                "^.*| Versioned | 2       | Update table | JDBC | .......... ........ | Success |$");
     }
 
-    private boolean textFoundInLogFile(String text) {
-        try {
-            Scanner scanner = new Scanner(new File("target/test.log"));
-            String pattern = text.replace("+", "\\+").replace("|", "\\|");
+    private void assertLogContains(String log, String... expectedPatterns) {
 
-            //now read the file line by line...
-            while (scanner.hasNextLine()) {
-                if (scanner.nextLine().matches("^.*" + pattern + "$"))
-                    {
-                        return true;
-                    }
+        String[] logLines = log.split("\\r?\\n");
+
+        for (String pattern : expectedPatterns) {
+
+            Pattern p = Pattern.compile(pattern);
+            boolean matched = false;
+
+            for (String maybeMatch : logLines) {
+                if (p.matcher(maybeMatch).matches()) {
+                    matched = true;
+                    break;
+                }
             }
 
-        } catch(FileNotFoundException e) { 
-            return false;
+            assertTrue("Pattern not found: " + pattern, matched);
         }
-        
-        return false;
+    }
+
+    private String runCommand(String command) {
+
+        TestIO io = TestIO.noTrace();
+
+        CommandOutcome result = testFactory
+                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", command)
+                .autoLoadModules()
+                .bootLogger(io.getBootLogger())
+                .run();
+        assertTrue(result.isSuccess());
+
+        return io.getStdout();
     }
 }
