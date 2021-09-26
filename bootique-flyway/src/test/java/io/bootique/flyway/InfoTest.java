@@ -114,7 +114,7 @@ public class InfoTest {
                 }
             }
 
-            assertTrue("Line not found: " + line, matched);
+            assertTrue("Line not found: " + line + ", file contents: " + actualLines, matched);
         }
     }
 }
