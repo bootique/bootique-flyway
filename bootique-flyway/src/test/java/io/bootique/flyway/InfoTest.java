@@ -25,9 +25,11 @@ import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.Scanner;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
 
@@ -42,7 +44,7 @@ public class InfoTest {
     public final BQTestFactory testFactory = new BQTestFactory();
 
     @Test
-    public void verifyInfoMessage() {
+    public void verifyInfoMessage() throws IOException {
         BQRuntime runtime;
 
         testFactory
@@ -70,43 +72,49 @@ public class InfoTest {
         testInfoCommand(runtime, 2);
     }
 
-    private void testInfoCommand(BQRuntime runtime, int which) {
+    private void testInfoCommand(BQRuntime runtime, int which) throws IOException {
         CommandOutcome result = runtime.run();
         assertTrue(result.isSuccess());
 
         if (which == 1) {
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
-            assertTrue(textFoundInLogFile("| Category  | Version | Description  | Type | Installed On | State   |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
-            assertTrue(textFoundInLogFile("| Versioned | 1       | Init         | SQL  |              | Pending |"));
-            assertTrue(textFoundInLogFile("| Versioned | 2       | Update table | JDBC |              | Pending |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+--------------+---------+"));
+            assertLogFileContents(
+                    "+-----------+---------+--------------+------+--------------+---------+",
+                    "| Category  | Version | Description  | Type | Installed On | State   |",
+                    "+-----------+---------+--------------+------+--------------+---------+",
+                    "| Versioned | 1       | Init         | SQL  |              | Pending |",
+                    "| Versioned | 2       | Update table | JDBC |              | Pending |",
+                    "+-----------+---------+--------------+------+--------------+---------+");
         } else {
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
-            assertTrue(textFoundInLogFile("| Category  | Version | Description  | Type | Installed On        | State   |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
-            assertTrue(textFoundInLogFile("| Versioned | 1       | Init         | SQL  | .......... ........ | Success |"));
-            assertTrue(textFoundInLogFile("| Versioned | 2       | Update table | JDBC | .......... ........ | Success |"));
-            assertTrue(textFoundInLogFile("+-----------+---------+--------------+------+---------------------+---------+"));
+            assertLogFileContents("+-----------+---------+--------------+------+---------------------+---------+",
+                    "| Category  | Version | Description  | Type | Installed On        | State   |",
+                    "+-----------+---------+--------------+------+---------------------+---------+",
+                    "| Versioned | 1       | Init         | SQL  | .......... ........ | Success |",
+                    "| Versioned | 2       | Update table | JDBC | .......... ........ | Success |",
+                    "+-----------+---------+--------------+------+---------------------+---------+");
         }
     }
 
-    private boolean textFoundInLogFile(String text) {
-        try {
-            Scanner scanner = new Scanner(new File("target/test.log"));
-            String pattern = text.replace("+", "\\+").replace("|", "\\|");
+    private void assertLogFileContents(String... lines) throws IOException {
 
-            //now read the file line by line...
-            while (scanner.hasNextLine()) {
-                if (scanner.nextLine().matches("^.*" + pattern + "$")) {
-                    return true;
+        File file = new File("target/test.log");
+        assertTrue("No test log file", file.exists());
+        List<String> actualLines = Files.readAllLines(file.toPath());
+
+        // TODO: should we also assert the order of the lines, not simply presence?
+
+        for (String line : lines) {
+            Pattern pattern = Pattern.compile("^.*" + line.replace("+", "\\+").replace("|", "\\|") + "$");
+
+            boolean matched = false;
+
+            for (String maybeMatch : actualLines) {
+                if (pattern.matcher(maybeMatch).matches()) {
+                    matched = true;
+                    break;
                 }
             }
 
-        } catch (FileNotFoundException e) {
-            return false;
+            assertTrue("Line not found: " + line, matched);
         }
-
-        return false;
     }
 }
