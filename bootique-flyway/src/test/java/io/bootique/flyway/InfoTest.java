@@ -44,32 +44,32 @@ public class InfoTest {
     @Test
     public void verifyInfoMessage() {
         BQRuntime runtime;
-        
+
         testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--clean")
-            .autoLoadModules()
-            .run();
-        
+                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--clean")
+                .autoLoadModules()
+                .run();
+
         runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
-            .autoLoadModules()
-            .createRuntime();
+                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
+                .autoLoadModules()
+                .createRuntime();
 
         testInfoCommand(runtime, 1);
-        
+
         testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--migrate")
-            .autoLoadModules()
-            .run();
+                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--migrate")
+                .autoLoadModules()
+                .run();
 
         runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
-            .autoLoadModules()
-            .createRuntime();
+                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--info")
+                .autoLoadModules()
+                .createRuntime();
 
         testInfoCommand(runtime, 2);
     }
-    
+
     private void testInfoCommand(BQRuntime runtime, int which) {
         CommandOutcome result = runtime.run();
         assertTrue(result.isSuccess());
@@ -98,16 +98,15 @@ public class InfoTest {
 
             //now read the file line by line...
             while (scanner.hasNextLine()) {
-                if (scanner.nextLine().matches("^.*" + pattern + "$"))
-                    {
-                        return true;
-                    }
+                if (scanner.nextLine().matches("^.*" + pattern + "$")) {
+                    return true;
+                }
             }
 
-        } catch(FileNotFoundException e) { 
+        } catch (FileNotFoundException e) {
             return false;
         }
-        
+
         return false;
     }
 }
