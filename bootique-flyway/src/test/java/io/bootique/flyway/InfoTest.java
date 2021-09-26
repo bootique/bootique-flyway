@@ -20,7 +20,6 @@
 package io.bootique.flyway;
 
 import io.bootique.BQRuntime;
-import io.bootique.command.CommandOutcome;
 import io.bootique.test.junit.BQTestFactory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -57,7 +56,11 @@ public class InfoTest {
                 .autoLoadModules()
                 .createRuntime();
 
-        testInfoCommand(runtime, 1);
+        assertTrue(runtime.run().isSuccess());
+        assertLogFileContents(
+                "^.*| Category  | Version | Description  | Type | Installed On | State   |$",
+                "^.*| Versioned | 1       | Init         | SQL  |              | Pending |$",
+                "^.*| Versioned | 2       | Update table | JDBC |              | Pending |$");
 
         testFactory
                 .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", "--migrate")
@@ -69,52 +72,32 @@ public class InfoTest {
                 .autoLoadModules()
                 .createRuntime();
 
-        testInfoCommand(runtime, 2);
+        assertTrue(runtime.run().isSuccess());
+        assertLogFileContents(
+                "^.*| Category  | Version | Description  | Type | Installed On        | State   |$",
+                "^.*| Versioned | 1       | Init         | SQL  | .......... ........ | Success |$",
+                "^.*| Versioned | 2       | Update table | JDBC | .......... ........ | Success |$");
     }
 
-    private void testInfoCommand(BQRuntime runtime, int which) throws IOException {
-        CommandOutcome result = runtime.run();
-        assertTrue(result.isSuccess());
-
-        if (which == 1) {
-            assertLogFileContents(
-                    "+-----------+---------+--------------+------+--------------+---------+",
-                    "| Category  | Version | Description  | Type | Installed On | State   |",
-                    "+-----------+---------+--------------+------+--------------+---------+",
-                    "| Versioned | 1       | Init         | SQL  |              | Pending |",
-                    "| Versioned | 2       | Update table | JDBC |              | Pending |",
-                    "+-----------+---------+--------------+------+--------------+---------+");
-        } else {
-            assertLogFileContents("+-----------+---------+--------------+------+---------------------+---------+",
-                    "| Category  | Version | Description  | Type | Installed On        | State   |",
-                    "+-----------+---------+--------------+------+---------------------+---------+",
-                    "| Versioned | 1       | Init         | SQL  | .......... ........ | Success |",
-                    "| Versioned | 2       | Update table | JDBC | .......... ........ | Success |",
-                    "+-----------+---------+--------------+------+---------------------+---------+");
-        }
-    }
-
-    private void assertLogFileContents(String... lines) throws IOException {
+    private void assertLogFileContents(String... patterns) throws IOException {
 
         File file = new File("target/test.log");
         assertTrue("No test log file", file.exists());
         List<String> actualLines = Files.readAllLines(file.toPath());
 
-        // TODO: should we also assert the order of the lines, not simply presence?
+        for (String pattern : patterns) {
 
-        for (String line : lines) {
-            Pattern pattern = Pattern.compile("^.*" + line.replace("+", "\\+").replace("|", "\\|") + "$");
-
+            Pattern p = Pattern.compile(pattern);
             boolean matched = false;
 
             for (String maybeMatch : actualLines) {
-                if (pattern.matcher(maybeMatch).matches()) {
+                if (p.matcher(maybeMatch).matches()) {
                     matched = true;
                     break;
                 }
             }
 
-            assertTrue("Line not found: " + line + ", file contents: " + actualLines, matched);
+            assertTrue("Pattern not found: " + pattern, matched);
         }
     }
 }
