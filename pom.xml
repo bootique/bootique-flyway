@@ -62,7 +62,7 @@
             </dependency>
             <dependency>
                 <groupId>io.bootique</groupId>
-                <artifactId>bootique-test</artifactId>
+                <artifactId>bootique-junit5</artifactId>
                 <version>${bootique.version}</version>
             </dependency>
             <dependency>
@@ -73,6 +73,11 @@
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
                 <artifactId>bootique-jdbc-tomcat</artifactId>
+                <version>${bootique.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.bootique.jdbc</groupId>
+                <artifactId>bootique-jdbc-junit5</artifactId>
                 <version>${bootique.version}</version>
             </dependency>
             <dependency>
@@ -96,9 +101,9 @@
                 <version>${h2.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.bootique.jdbc</groupId>
-                <artifactId>bootique-jdbc-test</artifactId>
-                <version>${bootique.version}</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>${junit5.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

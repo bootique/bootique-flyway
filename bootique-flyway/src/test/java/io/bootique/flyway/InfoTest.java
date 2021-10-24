@@ -20,19 +20,21 @@
 package io.bootique.flyway;
 
 import io.bootique.command.CommandOutcome;
-import io.bootique.test.junit.BQTestFactory;
-import io.bootique.test.junit.TestIO;
-import org.junit.Rule;
-import org.junit.Test;
+import io.bootique.junit5.BQTest;
+import io.bootique.junit5.BQTestFactory;
+import io.bootique.junit5.BQTestTool;
+import io.bootique.junit5.TestIO;
+import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+@BQTest
 public class InfoTest {
 
-    @Rule
-    public final BQTestFactory testFactory = new BQTestFactory();
+    @BQTestTool
+    final BQTestFactory testFactory = new BQTestFactory();
 
     @Test
     public void verifyInfoMessage() {
@@ -68,7 +70,7 @@ public class InfoTest {
                 }
             }
 
-            assertTrue("Pattern not found: " + pattern, matched);
+            assertTrue(matched, () -> "Pattern not found: " + pattern);
         }
     }
 

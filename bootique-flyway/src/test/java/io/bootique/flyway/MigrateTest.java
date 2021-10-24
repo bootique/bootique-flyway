@@ -20,79 +20,46 @@
 package io.bootique.flyway;
 
 import io.bootique.BQRuntime;
-import io.bootique.command.CommandOutcome;
-import io.bootique.jdbc.test.DatabaseChannel;
-import io.bootique.jdbc.test.Table;
-import io.bootique.test.junit.BQTestFactory;
-import org.junit.Rule;
-import org.junit.Test;
+import io.bootique.jdbc.DataSourceFactory;
+import io.bootique.jdbc.junit5.Table;
+import io.bootique.jdbc.junit5.connector.DbConnector;
+import io.bootique.jdbc.junit5.metadata.DbMetadata;
+import io.bootique.junit5.BQTest;
+import io.bootique.junit5.BQTestFactory;
+import io.bootique.junit5.BQTestTool;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
+import javax.sql.DataSource;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Tests for migrate command.
- *
- * @author Ibragimov Ruslan
- */
+@BQTest
 public class MigrateTest {
 
-    @Rule
-    public final BQTestFactory testFactory = new BQTestFactory();
+    @BQTestTool
+    final BQTestFactory testFactory = new BQTestFactory().autoLoadModules();
 
-    @Test
-    public void defaultMigration() {
-        BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/defaultMigration.yml", "--migrate")
-            .autoLoadModules()
-            .createRuntime();
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "classpath:io/bootique/flyway/defaultMigration.yml",
+            "classpath:io/bootique/flyway/explicitDefaultMigration.yml",
+            "classpath:io/bootique/flyway/explicitNonDefaultMigration.yml",
+            "classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml"
+    })
+    public void testMigration(String config) {
+        BQRuntime app = testFactory
+                .app("-c", config, "--migrate")
+                .createRuntime();
 
-        testMigrateCommand(runtime);
-    }
+        assertTrue(app.run().isSuccess());
 
-    @Test
-    public void explicitDefaultMigration() {
-        BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/explicitDefaultMigration.yml", "--migrate")
-            .autoLoadModules()
-            .createRuntime();
-
-        testMigrateCommand(runtime);
-    }
-
-    @Test
-    public void explicitNonDefaultMigration() {
-        BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/explicitNonDefaultMigration.yml", "--migrate")
-            .autoLoadModules()
-            .createRuntime();
-
-        testMigrateCommand(runtime);
-    }
-
-    @Test
-    public void explicitNonDefaultMigrationConfigfile() {
-        BQRuntime runtime = testFactory
-            .app("--config=classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml", "--migrate")
-            .autoLoadModules()
-            .createRuntime();
-
-        testMigrateCommand(runtime);
-    }
-    
-    private void testMigrateCommand(BQRuntime runtime) {
-        CommandOutcome result = runtime.run();
-        assertTrue(result.isSuccess());
-
-        Table a = DatabaseChannel.get(runtime).newTable("TEST").columnNames("ID", "NAME").build();
-        List<Object[]> row = a.select();
-        assertEquals(1, row.get(0)[0]);
-        assertEquals("Test", row.get(0)[1]);
-        assertEquals(2, row.get(1)[0]);
-        assertEquals("Test 2", row.get(1)[1]);
+        DataSource ds = app.getInstance(DataSourceFactory.class).forName("test");
+        DbConnector connector = new DbConnector(ds, DbMetadata.create(ds));
+        Table a = connector.getTable("TEST");
 
         a.matcher().assertMatches(2);
+        a.matcher().eq("ID", 1).eq("NAME", "Test").assertOneMatch();
+        a.matcher().eq("ID", 2).eq("NAME", "Test 2").assertOneMatch();
     }
 }
