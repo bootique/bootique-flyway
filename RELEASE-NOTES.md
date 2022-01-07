@@ -1,3 +1,7 @@
+## 3.0.M1
+
+* #13 Upgrade flyway to 8.4.0
+
 ## 2.0.M1
 
 * #9 Upgrade to Flyway 6.5.0 with the ability to read Flyway configuration files
