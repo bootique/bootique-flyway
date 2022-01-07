@@ -15,10 +15,10 @@
 
 jdbc:
   test:
-    url: jdbc:h2:mem:defaultMigration
+    url: "jdbc:derby:target/derby/defaultMigration;create=true"
     username: ''
     password: ''
-    driverClassName: org.h2.Driver
+    driverClassName: "org.apache.derby.jdbc.EmbeddedDriver"
 
 flyway:
   dataSources:
