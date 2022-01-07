@@ -44,7 +44,7 @@
     <properties>
         <bootique.version>${project.version}</bootique.version>
         <flyway.version>8.4.0</flyway.version>
-        <h2.version>1.4.200</h2.version>
+        <derby.version>10.14.1.0</derby.version>
     </properties>
 
     <scm>
@@ -96,9 +96,9 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derby</artifactId>
+                <version>${derby.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
