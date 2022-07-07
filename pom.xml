@@ -44,7 +44,7 @@
     <properties>
         <bootique.version>${project.version}</bootique.version>
         <flyway.version>8.4.0</flyway.version>
-        <derby.version>10.14.1.0</derby.version>
+        <derby.version>10.15.2.0</derby.version>
     </properties>
 
     <scm>
@@ -98,6 +98,11 @@
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
+                <version>${derby.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbytools</artifactId>
                 <version>${derby.version}</version>
             </dependency>
             <dependency>
