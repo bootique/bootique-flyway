@@ -59,7 +59,7 @@ public class MigrateTest {
         Table a = connector.getTable("TEST");
 
         a.matcher().assertMatches(2);
-        a.matcher().eq("ID", 1).eq("NAME", "Test").assertOneMatch();
-        a.matcher().eq("ID", 2).eq("NAME", "Test 2").assertOneMatch();
+        a.matcher().eq("ID", 1).andEq("NAME", "Test").assertOneMatch();
+        a.matcher().eq("ID", 2).andEq("NAME", "Test 2").assertOneMatch();
     }
 }
