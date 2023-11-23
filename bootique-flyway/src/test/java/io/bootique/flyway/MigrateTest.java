@@ -47,7 +47,7 @@ public class MigrateTest {
             "classpath:io/bootique/flyway/explicitNonDefaultMigration.yml",
             "classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml"
     })
-    public void testMigration(String config) {
+    public void migration(String config) {
         BQRuntime app = testFactory
                 .app("-c", config, "--migrate")
                 .createRuntime();
