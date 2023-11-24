@@ -15,10 +15,7 @@
 
 jdbc:
   test:
-    url: "jdbc:derby:target/derby/verifyInfoMessage;create=true"
-    username: ''
-    password: ''
-    driverClassName: "org.apache.derby.jdbc.EmbeddedDriver"
+    jdbcUrl: "jdbc:derby:target/derby/verifyInfoMessage;create=true"
 
 flyway:
   dataSources:

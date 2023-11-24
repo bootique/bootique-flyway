@@ -15,10 +15,7 @@
 
 jdbc:
   test:
-    url: "jdbc:derby:target/derby/explicitNonDefaultMigrationConfigFile;create=true"
-    username: bogus
-    password: bogus
-    driverClassName: "org.apache.derby.jdbc.EmbeddedDriver"
+    jdbcUrl: "jdbc:derby:target/derby/explicitNonDefaultMigrationConfigFile;create=true"
 
 flyway:
   locations:
