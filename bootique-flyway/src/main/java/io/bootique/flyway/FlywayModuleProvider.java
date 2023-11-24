@@ -19,37 +19,26 @@
 
 package io.bootique.flyway;
 
-import io.bootique.BQModuleMetadata;
 import io.bootique.BQModuleProvider;
-import io.bootique.di.BQModule;
+import io.bootique.bootstrap.BuiltModule;
 import io.bootique.jdbc.JdbcModuleProvider;
 
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 
 public class FlywayModuleProvider implements BQModuleProvider {
 
     @Override
-    public BQModule module() {
-        return new FlywayModule();
-    }
-
-    @Override
-    public Map<String, Type> configs() {
-        return Collections.singletonMap("flyway", FlywayFactory.class);
+    public BuiltModule buildModule() {
+        return BuiltModule.of(new FlywayModule())
+                .provider(this)
+                .description("Integrates Flyway database migrations library")
+                .config("flyway", FlywayFactory.class)
+                .build();
     }
 
     @Override
     public Collection<BQModuleProvider> dependencies() {
         return Collections.singletonList(new JdbcModuleProvider());
-    }
-
-    @Override
-    public BQModuleMetadata.Builder moduleBuilder() {
-        return BQModuleProvider.super
-            .moduleBuilder()
-            .description("Provides database migrations based on the Flyway library.");
     }
 }
