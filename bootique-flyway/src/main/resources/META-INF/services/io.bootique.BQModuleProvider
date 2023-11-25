@@ -1,1 +1,1 @@
-io.bootique.flyway.FlywayModuleProvider
+io.bootique.flyway.FlywayModule

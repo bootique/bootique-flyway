@@ -20,21 +20,40 @@
 package io.bootique.flyway;
 
 import io.bootique.BQCoreModule;
-import io.bootique.ConfigModule;
+import io.bootique.BQModuleProvider;
+import io.bootique.bootstrap.BuiltModule;
 import io.bootique.config.ConfigurationFactory;
+import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.flyway.command.BaselineCommand;
-import io.bootique.flyway.command.CleanCommand;
-import io.bootique.flyway.command.InfoCommand;
-import io.bootique.flyway.command.MigrateCommand;
-import io.bootique.flyway.command.RepairCommand;
-import io.bootique.flyway.command.ValidateCommand;
+import io.bootique.flyway.command.*;
 import io.bootique.jdbc.DataSourceFactory;
+import io.bootique.jdbc.JdbcModuleProvider;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import static java.util.Arrays.asList;
 
-public class FlywayModule extends ConfigModule {
+public class FlywayModule implements BQModule, BQModuleProvider {
+
+    private static final String CONFIG_PREFIX = "flyway";
+
+    @Override
+    public BuiltModule buildModule() {
+        return BuiltModule.of(this)
+                .provider(this)
+                .description("Integrates Flyway database migrations library")
+                .config(CONFIG_PREFIX, FlywayFactory.class)
+                .build();
+    }
+
+    @Override
+    @Deprecated(since = "3.0", forRemoval = true)
+    public Collection<BQModuleProvider> dependencies() {
+        return Collections.singletonList(new JdbcModuleProvider());
+    }
+
 
     @Override
     public void configure(Binder binder) {
@@ -50,7 +69,7 @@ public class FlywayModule extends ConfigModule {
 
     @Provides
     public FlywaySettings createFlywayDataSources(ConfigurationFactory configFactory, DataSourceFactory dataSourceFactory) {
-        return config(FlywayFactory.class, configFactory).createDataSources(dataSourceFactory);
+        return configFactory.config(FlywayFactory.class, CONFIG_PREFIX).createDataSources(dataSourceFactory);
     }
 
     @Provides
