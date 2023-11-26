@@ -21,7 +21,7 @@ package io.bootique.flyway;
 
 import io.bootique.BQCoreModule;
 import io.bootique.BQModuleProvider;
-import io.bootique.bootstrap.BuiltModule;
+import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
@@ -40,8 +40,8 @@ public class FlywayModule implements BQModule, BQModuleProvider {
     private static final String CONFIG_PREFIX = "flyway";
 
     @Override
-    public BuiltModule buildModule() {
-        return BuiltModule.of(this)
+    public ModuleCrate moduleCrate() {
+        return ModuleCrate.of(this)
                 .provider(this)
                 .description("Integrates Flyway database migrations library")
                 .config(CONFIG_PREFIX, FlywayFactory.class)
