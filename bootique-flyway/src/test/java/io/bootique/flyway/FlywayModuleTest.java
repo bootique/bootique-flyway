@@ -19,25 +19,14 @@
 
 package io.bootique.flyway;
 
-import io.bootique.BQRuntime;
-import io.bootique.jdbc.JdbcModule;
 import io.bootique.junit5.*;
 import org.junit.jupiter.api.Test;
 
 @BQTest
-public class FlywayModuleIT {
-
-    @BQTestTool
-    final BQTestFactory testFactory = new BQTestFactory();
+public class FlywayModuleTest {
 
     @Test
-    public void autoLoadable() {
-        BQModuleProviderChecker.testAutoLoadable(FlywayModule.class);
-    }
-
-    @Test
-    public void moduleDeclaresDependencies() {
-        final BQRuntime bqRuntime = testFactory.app().moduleProvider(new FlywayModule()).createRuntime();
-        BQRuntimeChecker.testModulesLoaded(bqRuntime, JdbcModule.class, FlywayModule.class);
+    public void check() {
+        BQModuleTester.of(FlywayModule.class).testAutoLoadable().testConfig();
     }
 }

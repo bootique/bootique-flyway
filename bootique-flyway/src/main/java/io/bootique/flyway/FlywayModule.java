@@ -20,38 +20,26 @@
 package io.bootique.flyway;
 
 import io.bootique.BQCoreModule;
-import io.bootique.BQModuleProvider;
+import io.bootique.BQModule;
 import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
-import io.bootique.di.BQModule;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.flyway.command.*;
 import io.bootique.jdbc.DataSourceFactory;
-import io.bootique.jdbc.JdbcModule;
-
-import java.util.Collection;
-import java.util.Collections;
 
 import static java.util.Arrays.asList;
 
-public class FlywayModule implements BQModule, BQModuleProvider {
+public class FlywayModule implements BQModule {
 
     private static final String CONFIG_PREFIX = "flyway";
 
     @Override
-    public ModuleCrate moduleCrate() {
+    public ModuleCrate crate() {
         return ModuleCrate.of(this)
-                .provider(this)
                 .description("Integrates Flyway database migrations library")
                 .config(CONFIG_PREFIX, FlywayFactory.class)
                 .build();
-    }
-
-    @Override
-    @Deprecated(since = "3.0", forRemoval = true)
-    public Collection<BQModuleProvider> dependencies() {
-        return Collections.singletonList(new JdbcModule());
     }
 
     @Override
