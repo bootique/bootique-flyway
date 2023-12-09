@@ -26,7 +26,6 @@ import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
 import io.bootique.flyway.command.*;
-import io.bootique.jdbc.DataSourceFactory;
 
 import static java.util.Arrays.asList;
 
@@ -55,8 +54,8 @@ public class FlywayModule implements BQModule {
     }
 
     @Provides
-    public FlywaySettings createFlywayDataSources(ConfigurationFactory configFactory, DataSourceFactory dataSourceFactory) {
-        return configFactory.config(FlywayFactory.class, CONFIG_PREFIX).createDataSources(dataSourceFactory);
+    public FlywaySettings createFlywayDataSources(ConfigurationFactory configFactory) {
+        return configFactory.config(FlywayFactory.class, CONFIG_PREFIX).create();
     }
 
     @Provides

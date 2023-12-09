@@ -23,6 +23,7 @@ import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
 import io.bootique.jdbc.DataSourceFactory;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,12 +32,20 @@ import java.util.stream.Collectors;
 
 @BQConfig("Configures Flyway.")
 public class FlywayFactory {
+
+    private final DataSourceFactory dataSourceFactory;
+
     private List<String> dataSources = new ArrayList<>();
     private List<String> locations = Collections.singletonList("db/migration");
     private List<String> configFiles = new ArrayList<>(); // list of config files to use
 
-    FlywaySettings createDataSources(DataSourceFactory dataSourceFactory) {
-        final List<DataSource> dataSources = this.dataSources.stream().map(dataSourceFactory::forName).collect(Collectors.toList());
+    @Inject
+    public FlywayFactory(DataSourceFactory dataSourceFactory) {
+        this.dataSourceFactory = dataSourceFactory;
+    }
+
+    FlywaySettings create() {
+        List<DataSource> dataSources = this.dataSources.stream().map(dataSourceFactory::forName).collect(Collectors.toList());
         return new FlywaySettings(dataSources, locations, configFiles);
     }
 
