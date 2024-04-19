@@ -25,11 +25,11 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-build-v1
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}-build-v2
           restore-keys: ${{ runner.os }}-maven
 
       - name: Build and test...
-        run: mvn clean verify -X -e
+        run: mvn clean verify -U
 
   deploy:
     needs: build
