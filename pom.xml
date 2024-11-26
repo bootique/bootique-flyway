@@ -43,7 +43,7 @@
 
     <properties>
         <flyway.version>8.4.0</flyway.version>
-        <derby.version>10.15.2.0</derby.version>
+        <derby.version>10.17.1.0</derby.version>
     </properties>
 
     <scm>
