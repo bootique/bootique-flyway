@@ -49,7 +49,7 @@ public class MigrateTest {
     })
     public void migration(String config) {
         BQRuntime app = testFactory
-                .app("-c", config, "--migrate")
+                .app("--config", config, "--migrate")
                 .createRuntime();
 
         assertTrue(app.run().isSuccess());
