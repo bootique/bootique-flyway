@@ -49,6 +49,19 @@ See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bo
 </dependency>
 ```
 
+Unless you are using MySQL or PostgreSQL (those will work out of the box), you will also need to include DB-specific
+Flyway plugin as a dependency. Make sure you use the same version of the "plugin" as the Flyway version provided by 
+Bootique. E.g.:
+
+```xml
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-database-snowflake</artifactId>
+    <version>X.XX</version>
+</dependency>
+```
+You can check the [Maven Central repo](https://repo1.maven.org/maven2/org/flywaydb/) for the list of supported "plugins".
+
 **Gradle**
 ```groovy
 compile("io.bootique.flyway:bootique-flyway:1.0")
