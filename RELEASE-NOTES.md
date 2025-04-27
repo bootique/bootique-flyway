@@ -1,3 +1,7 @@
+## 4.0-M1
+
+* #17 Upgrade Apache Derby dependency to 10.17.x.x
+
 ## 3.0.M1
 
 * #13 Upgrade flyway to 8.4.0
