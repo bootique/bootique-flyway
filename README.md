@@ -102,7 +102,7 @@ flyway:
 
 Only three flyway options are recognized:
 - locations: a list of Flyway locations to look for Flyway migrations
-- configFiles: a list of Flyway configuraton files (as custom config files, see https://flywaydb.org/documentation/commandline/)
+- configFiles: a list of Flyway configuration files (as custom config files, see https://flywaydb.org/documentation/commandline/)
 - dataSources: a list of JDBC connections
 
 Using custom config files allows you to more easily run Flyway using a file
