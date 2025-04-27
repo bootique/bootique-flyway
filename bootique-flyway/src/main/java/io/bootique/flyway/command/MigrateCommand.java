@@ -19,32 +19,32 @@
 
 package io.bootique.flyway.command;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-
 import io.bootique.cli.Cli;
 import io.bootique.command.CommandOutcome;
 import io.bootique.command.CommandWithMetadata;
-import io.bootique.flyway.FlywayRunner;
+import io.bootique.flyway.Flyways;
 import io.bootique.meta.application.CommandMetadata;
-
-import static io.bootique.flyway.command.FlywayCommand.command;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import org.flywaydb.core.Flyway;
 
 public class MigrateCommand extends CommandWithMetadata {
-    private Provider<FlywayRunner> runnerProvider;
+
+    private final Provider<Flyways> flyways;
 
     @Inject
-    public MigrateCommand(Provider<FlywayRunner> runnerProvider) {
+    public MigrateCommand(Provider<Flyways> flyways) {
         super(CommandMetadata
                 .builder(MigrateCommand.class)
                 .description("Migrates the schema to the latest version. " +
                         "Flyway will create the metadata table automatically if it doesn't exist.")
                 .build());
-        this.runnerProvider = runnerProvider;
+        this.flyways = flyways;
     }
 
     @Override
     public CommandOutcome run(Cli cli) {
-        return command(() -> runnerProvider.get().migrate());
+        flyways.get().flyways().forEach(Flyway::migrate);
+        return CommandOutcome.succeeded();
     }
 }

@@ -17,28 +17,14 @@
  * under the License.
  */
 
-package io.bootique.flyway.command;
+package io.bootique.flyway;
 
-import io.bootique.command.CommandOutcome;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.flywaydb.core.Flyway;
 
-@FunctionalInterface
-interface FlywayCommand {
-    Logger LOGGER = LoggerFactory.getLogger(FlywayCommand.class);
+import java.util.List;
 
-    /**
-     * SAM for passing operations inside command method.
-     */
-    void apply() throws Exception;
-
-    static CommandOutcome command(FlywayCommand command) {
-        try {
-            command.apply();
-            return CommandOutcome.succeeded();
-        } catch (Exception e) {
-            LOGGER.error("Error while executing command.", e);
-            return CommandOutcome.failed(1, e.getMessage());
-        }
-    }
+/**
+ * @since 4.0
+ */
+public record Flyways(List<Flyway> flyways) {
 }

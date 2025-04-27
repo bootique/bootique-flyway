@@ -19,31 +19,56 @@
 
 package io.bootique.flyway.command;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-
 import io.bootique.cli.Cli;
 import io.bootique.command.CommandOutcome;
 import io.bootique.command.CommandWithMetadata;
-import io.bootique.flyway.FlywayRunner;
+import io.bootique.flyway.Flyways;
 import io.bootique.meta.application.CommandMetadata;
-
-import static io.bootique.flyway.command.FlywayCommand.command;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.MigrationInfo;
+import org.flywaydb.core.api.MigrationInfoService;
+import org.flywaydb.core.api.MigrationVersion;
+import org.flywaydb.core.internal.info.MigrationInfoDumper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class InfoCommand extends CommandWithMetadata {
-    private Provider<FlywayRunner> runnerProvider;
+
+    private final Provider<Flyways> flyways;
 
     @Inject
-    public InfoCommand(Provider<FlywayRunner> runnerProvider) {
+    public InfoCommand(Provider<Flyways> flyways) {
         super(CommandMetadata
                 .builder(InfoCommand.class)
                 .description("Prints the details and status information about all the migrations.")
                 .build());
-        this.runnerProvider = runnerProvider;
+        this.flyways = flyways;
     }
 
     @Override
     public CommandOutcome run(Cli cli) {
-        return command(() -> runnerProvider.get().info());
+        flyways.get().flyways().forEach(this::info);
+        return CommandOutcome.succeeded();
+    }
+
+    private void info(Flyway f) {
+        MigrationInfoService info = f.info();
+        MigrationInfo current = info.current();
+        MigrationVersion currentSchemaVersion = current == null ? MigrationVersion.EMPTY : current.getVersion();
+
+        MigrationVersion schemaVersionToOutput = currentSchemaVersion == null ? MigrationVersion.EMPTY : currentSchemaVersion;
+
+        final Logger logger = LoggerFactory.getLogger(Flyways.class);
+
+        if (logger.isInfoEnabled()) {
+            logger.info("Schema version: " + schemaVersionToOutput);
+            logger.info("");
+
+            for (String line : MigrationInfoDumper.dumpToAsciiTable(info.all()).split("\\r?\\n")) {
+                logger.info(line);
+            }
+        }
     }
 }

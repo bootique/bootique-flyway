@@ -19,32 +19,32 @@
 
 package io.bootique.flyway.command;
 
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-
 import io.bootique.cli.Cli;
 import io.bootique.command.CommandOutcome;
 import io.bootique.command.CommandWithMetadata;
-import io.bootique.flyway.FlywayRunner;
+import io.bootique.flyway.Flyways;
 import io.bootique.meta.application.CommandMetadata;
-
-import static io.bootique.flyway.command.FlywayCommand.command;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import org.flywaydb.core.Flyway;
 
 public class CleanCommand extends CommandWithMetadata {
-    private Provider<FlywayRunner> runnerProvider;
+
+    private final Provider<Flyways> flyways;
 
     @Inject
-    public CleanCommand(Provider<FlywayRunner> runnerProvider) {
+    public CleanCommand(Provider<Flyways> flyways) {
         super(CommandMetadata
                 .builder(CleanCommand.class)
                 .description("Drops all objects (tables, views, procedures, triggers, ...) in the configured schemas." +
                         "The schemas are cleaned in the order specified by the schemas property.")
                 .build());
-        this.runnerProvider = runnerProvider;
+        this.flyways = flyways;
     }
 
     @Override
     public CommandOutcome run(Cli cli) {
-        return command(() -> runnerProvider.get().clean());
+        flyways.get().flyways().forEach(Flyway::clean);
+        return CommandOutcome.succeeded();
     }
 }

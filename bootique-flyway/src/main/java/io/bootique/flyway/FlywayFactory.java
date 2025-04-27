@@ -22,12 +22,20 @@ package io.bootique.flyway;
 import io.bootique.annotation.BQConfig;
 import io.bootique.annotation.BQConfigProperty;
 import io.bootique.jdbc.DataSourceFactory;
-
+import io.bootique.resource.ResourceFactory;
 import jakarta.inject.Inject;
+import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.configuration.Configuration;
+import org.flywaydb.core.internal.configuration.ConfigUtils;
+
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @BQConfig("Configures Flyway.")
@@ -35,18 +43,58 @@ public class FlywayFactory {
 
     private final DataSourceFactory dataSourceFactory;
 
-    private List<String> dataSources = new ArrayList<>();
-    private List<String> locations = Collections.singletonList("db/migration");
-    private List<String> configFiles = new ArrayList<>(); // list of config files to use
+    private List<String> dataSources;
+    private List<String> locations;
+    private List<String> configFiles;
 
     @Inject
     public FlywayFactory(DataSourceFactory dataSourceFactory) {
         this.dataSourceFactory = dataSourceFactory;
     }
 
-    FlywaySettings create() {
-        List<DataSource> dataSources = this.dataSources.stream().map(dataSourceFactory::forName).collect(Collectors.toList());
-        return new FlywaySettings(dataSources, locations, configFiles);
+    public Flyways create() {
+
+        String[] locations = this.locations != null ? this.locations.toArray(new String[0]) : new String[]{"db/migration"};
+        Map<String, String> configProperties = readConfigProperties();
+        List<String> dsNames = this.dataSources != null ? this.dataSources : List.of();
+
+        List<Flyway> flyways = dsNames
+                .stream()
+                .map(dataSourceFactory::forName)
+                .map(ds -> createFlyway(ds, locations, configProperties))
+                .collect(Collectors.toList());
+
+        return new Flyways(flyways);
+    }
+
+    private Flyway createFlyway(DataSource dataSource, String[] locations, Map<String, String> configProperties) {
+        Configuration config = Flyway.configure()
+                .locations(locations)
+                .dataSource(dataSource)
+                .configuration(configProperties);
+
+        return new Flyway(config);
+    }
+
+    private Map<String, String> readConfigProperties() {
+
+        if (this.configFiles == null || configFiles.isEmpty()) {
+            return Map.of();
+        }
+
+        Map<String, String> properties = new HashMap<>();
+
+        for (String file : this.configFiles) {
+            URL url = new ResourceFactory(file).getUrl();
+
+            try (Reader reader = new InputStreamReader(url.openStream())) {
+                properties.putAll(ConfigUtils.loadConfigurationFromReader(reader));
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading file: " + file, e);
+            }
+        }
+
+        return properties;
     }
 
     @BQConfigProperty("References to dataSources to access the database.")

@@ -25,9 +25,13 @@ import io.bootique.ModuleCrate;
 import io.bootique.config.ConfigurationFactory;
 import io.bootique.di.Binder;
 import io.bootique.di.Provides;
-import io.bootique.flyway.command.*;
-
-import static java.util.Arrays.asList;
+import io.bootique.flyway.command.BaselineCommand;
+import io.bootique.flyway.command.CleanCommand;
+import io.bootique.flyway.command.InfoCommand;
+import io.bootique.flyway.command.MigrateCommand;
+import io.bootique.flyway.command.RepairCommand;
+import io.bootique.flyway.command.ValidateCommand;
+import jakarta.inject.Singleton;
 
 public class FlywayModule implements BQModule {
 
@@ -43,23 +47,18 @@ public class FlywayModule implements BQModule {
 
     @Override
     public void configure(Binder binder) {
-        asList(
-                BaselineCommand.class,
-                CleanCommand.class,
-                InfoCommand.class,
-                MigrateCommand.class,
-                RepairCommand.class,
-                ValidateCommand.class
-        ).forEach(command -> BQCoreModule.extend(binder).addCommand(command));
+        BQCoreModule.extend(binder)
+                .addCommand(BaselineCommand.class)
+                .addCommand(CleanCommand.class)
+                .addCommand(InfoCommand.class)
+                .addCommand(MigrateCommand.class)
+                .addCommand(RepairCommand.class)
+                .addCommand(ValidateCommand.class);
     }
 
+    @Singleton
     @Provides
-    public FlywaySettings createFlywayDataSources(ConfigurationFactory configFactory) {
+    Flyways provideFlywayDataSources(ConfigurationFactory configFactory) {
         return configFactory.config(FlywayFactory.class, CONFIG_PREFIX).create();
-    }
-
-    @Provides
-    public FlywayRunner createFlywayRunner(FlywaySettings flywaySettings) {
-        return new FlywayRunner(flywaySettings);
     }
 }
