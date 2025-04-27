@@ -43,7 +43,7 @@
 
     <properties>
         <flyway.version>8.4.0</flyway.version>
-        <derby.version>10.17.1.0</derby.version>
+        <postgresql.version>42.7.4</postgresql.version>
     </properties>
 
     <scm>
@@ -76,8 +76,18 @@
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
-                <artifactId>bootique-jdbc-junit5</artifactId>
+                <artifactId>bootique-jdbc-junit5-testcontainers</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${testcontainers.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.bootique.logback</groupId>
@@ -93,11 +103,6 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-simple</artifactId>
                 <version>${slf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.derby</groupId>
-                <artifactId>derby</artifactId>
-                <version>${derby.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

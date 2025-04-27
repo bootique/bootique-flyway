@@ -13,14 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-jdbc:
-  test:
-    jdbcUrl: "jdbc:derby:target/derby/explicitNonDefaultMigrationConfigFile;create=true"
-
 flyway:
   locations:
     - bogus
   configFiles:
     - classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf
   dataSources:
-    - test
+    - pg

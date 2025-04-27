@@ -13,9 +13,9 @@
 --specific language governing permissions and limitations
 --under the License.
 
-CREATE TABLE TEST (
-  ID   INT PRIMARY KEY,
-  NAME VARCHAR(255)
+CREATE TABLE test (
+  id   INTEGER PRIMARY KEY,
+  name VARCHAR(255)
 );
 
-INSERT INTO TEST VALUES (1, 'Test');
+INSERT INTO test VALUES (1, 'Test');

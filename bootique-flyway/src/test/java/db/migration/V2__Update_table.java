@@ -28,10 +28,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class V2__Update_table extends BaseJavaMigration {
+
     private static Logger LOGGER = LoggerFactory.getLogger(V2__Update_table.class);
 
     public void migrate(Context context) {
-        String insertSQL = "INSERT INTO TEST (id, name) VALUES (2, 'Test 2')";
+        String insertSQL = "INSERT INTO test (id, name) VALUES (2, 'Test 2')";
 
         try (PreparedStatement statement = context.getConnection().prepareStatement(insertSQL)) {
             statement.execute();

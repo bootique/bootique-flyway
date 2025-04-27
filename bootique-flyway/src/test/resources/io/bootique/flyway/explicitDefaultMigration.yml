@@ -13,12 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-jdbc:
-  test:
-    jdbcUrl: "jdbc:derby:target/derby/explicitMigration;create=true"
-
 flyway:
   locations:
     - db/migration
   dataSources:
-    - test
+    - pg

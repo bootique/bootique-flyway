@@ -1,6 +1,5 @@
 ## 4.0-M1
 
-* #17 Upgrade Apache Derby dependency to 10.17.x.x
 * #19 Reimplement Flyway stack in a "canonical" way
 
 ## 3.0.M1

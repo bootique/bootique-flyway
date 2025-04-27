@@ -24,6 +24,7 @@ import io.bootique.jdbc.DataSourceFactory;
 import io.bootique.jdbc.junit5.Table;
 import io.bootique.jdbc.junit5.connector.DbConnector;
 import io.bootique.jdbc.junit5.metadata.DbMetadata;
+import io.bootique.jdbc.junit5.tc.TcDbTester;
 import io.bootique.junit5.BQTest;
 import io.bootique.junit5.BQTestFactory;
 import io.bootique.junit5.BQTestTool;
@@ -35,7 +36,10 @@ import javax.sql.DataSource;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @BQTest
-public class MigrateTest {
+public class MigrateCommandTest {
+
+    @BQTestTool
+    final TcDbTester db = TcDbTester.db("jdbc:tc:postgresql:11:///migrate");
 
     @BQTestTool
     final BQTestFactory testFactory = new BQTestFactory().autoLoadModules();
@@ -50,16 +54,17 @@ public class MigrateTest {
     public void migration(String config) {
         BQRuntime app = testFactory
                 .app("--config", config, "--migrate")
+                .module(db.moduleWithTestDataSource("pg"))
                 .createRuntime();
 
         assertTrue(app.run().isSuccess());
 
-        DataSource ds = app.getInstance(DataSourceFactory.class).forName("test");
+        DataSource ds = app.getInstance(DataSourceFactory.class).forName("pg");
         DbConnector connector = new DbConnector(ds, DbMetadata.create(ds));
-        Table a = connector.getTable("TEST");
+        Table a = connector.getTable("test");
 
         a.matcher().assertMatches(2);
-        a.matcher().eq("ID", 1).andEq("NAME", "Test").assertOneMatch();
-        a.matcher().eq("ID", 2).andEq("NAME", "Test 2").assertOneMatch();
+        a.matcher().eq("id", 1).andEq("name", "Test").assertOneMatch();
+        a.matcher().eq("id", 2).andEq("name", "Test 2").assertOneMatch();
     }
 }

@@ -20,6 +20,7 @@
 package io.bootique.flyway;
 
 import io.bootique.command.CommandOutcome;
+import io.bootique.jdbc.junit5.tc.TcDbTester;
 import io.bootique.junit5.BQTest;
 import io.bootique.junit5.BQTestFactory;
 import io.bootique.junit5.BQTestTool;
@@ -28,16 +29,35 @@ import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @BQTest
-public class InfoTest {
+public class InfoCommandTest {
+
+    @BQTestTool
+    static final TcDbTester db = TcDbTester.db("jdbc:tc:postgresql:11:///info");
 
     @BQTestTool
     final BQTestFactory testFactory = new BQTestFactory();
 
+    private String runCommand(String command) {
+
+        TestIO io = TestIO.noTrace();
+
+        CommandOutcome result = testFactory
+                .app("--config", "classpath:io/bootique/flyway/InfoCommandTest.yml", command)
+                .module(db.moduleWithTestDataSource("pg"))
+                .autoLoadModules()
+                .bootLogger(io.getBootLogger())
+                .run();
+
+        assertTrue(result.isSuccess());
+
+        return io.getStdout();
+    }
+
     @Test
-    public void verifyInfoMessage() {
+    public void info() {
 
         runCommand("--clean");
         String afterCleanLog = runCommand("--info");
@@ -72,19 +92,5 @@ public class InfoTest {
 
             assertTrue(matched, () -> "Pattern not found: " + pattern);
         }
-    }
-
-    private String runCommand(String command) {
-
-        TestIO io = TestIO.noTrace();
-
-        CommandOutcome result = testFactory
-                .app("--config=classpath:io/bootique/flyway/verifyInfoMessage.yml", command)
-                .autoLoadModules()
-                .bootLogger(io.getBootLogger())
-                .run();
-        assertTrue(result.isSuccess());
-
-        return io.getStdout();
     }
 }

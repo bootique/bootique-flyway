@@ -102,7 +102,7 @@ public class FlywayFactory {
         this.dataSources = dataSources;
     }
 
-    @BQConfigProperty("The locations to scan recursively for migration scripts.")
+    @BQConfigProperty("The locations to scan recursively for migration scripts. If missing, \"db/migration\" path is assumed")
     public void setLocations(List<String> locations) {
         this.locations = locations;
     }
