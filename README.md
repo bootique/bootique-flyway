@@ -25,18 +25,17 @@
 Provides [Flyway](https://flywaydb.org/) migrations framework integration with [Bootique](http://bootique.io).
 See usage example [bootique-flyway-demo](https://github.com/bootique-examples/bootique-flyway-demo).
 
-# Setup
+## Setup
 
-## Add bootique-flyway to your build tool:
+Add proper dependencies. Here is a Maven example:
 
-**Maven**
 ```xml
 <dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>3.0-M4</version>
+            <version>4.XX</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
@@ -62,21 +61,10 @@ Bootique. E.g.:
 ```
 You can check the [Maven Central repo](https://repo1.maven.org/maven2/org/flywaydb/) for the list of supported "plugins".
 
-**Gradle**
-```groovy
-compile("io.bootique.flyway:bootique-flyway:1.0")
-```
-
-*Note:* **bootique-flyway** is a part of [bootique-bom](https://github.com/bootique/bootique-bom), and version can be 
-imported from there.
-
-
 ## Available commands
 
-### FLYWAY COMMANDS AS OPTIONS
-
-Flyway is based around just 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair. They are represented in 
-the Bootique-Flyway module as command line options.
+`bootique-flyway` provides 6 commands: Migrate, Clean, Info, Validate, Baseline and Repair that can be called via CLI
+options:
 
 ```
   -b, --baseline
@@ -98,35 +86,11 @@ the Bootique-Flyway module as command line options.
        Validate applied migrations against resolved ones (on the filesystem or classpath) to detect accidental changes that may prevent the schema(s) from being recreated exactly.
 ```
 
-### BOOTIQUE OPTIONS
-
-The standard Bootique command line options you may need:
-
-
-```
-  -c yaml_location, --config=yaml_location
-           Specifies YAML config location, which can be a classpath (prefixed by classpath:), file path or a URL.
-
-  -H, --help-config
-           Prints information about application modules and their configuration
-           options.
-```
-
 ## Configuration
 
 ### YAML configuration file
 
-As an example here a YAML test config file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.yml.
-
-
 ```
-jdbc:
-  test:
-    url: jdbc:h2:mem:defaultMigration
-    username: bogus
-    password: bogus
-    driverClassName: org.h2.Driver
-
 flyway:
   locations:
     - bogus
@@ -150,13 +114,8 @@ is superseded by the settings in the Flyway configuration file.
 
 ### Flyway configuration file
 
-As an example here a Flyway test configuration file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf.
-
+Here is a Flyway test configuration file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf.
 
 ```
 flyway.locations = path/migration
 ```
-
-## Example Project
-
-[bootique-flyway-demo](https://github.com/bootique-examples/bootique-flyway-demo)
