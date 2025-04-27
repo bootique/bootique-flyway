@@ -109,9 +109,6 @@ Using custom config files allows you to more easily run Flyway using a file
 for database connection settings (the Bootique YAML file) and application
 settings in a Flyway file.
 
-In this example the locations property (with bogus as a non-existent location)
-is superseded by the settings in the Flyway configuration file.
-
 ### Flyway configuration file
 
 Here is a Flyway test configuration file: classpath:io/bootique/flyway/explicitNonDefaultMigrationConfigfile.conf.
