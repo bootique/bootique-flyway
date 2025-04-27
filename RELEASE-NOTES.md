@@ -2,6 +2,7 @@
 
 * #18 Upgrade Flyway to 11.8.0
 * #19 Reimplement Flyway stack in a "canonical" way
+* #20 Include PostgreSQL and MySQL integrations on bootique-flyway classpath
 
 ## 3.0.M1
 
