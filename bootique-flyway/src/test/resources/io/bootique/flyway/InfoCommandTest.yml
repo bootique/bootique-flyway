@@ -13,13 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 flyway:
   dataSources:
     - pg
+  configFiles:
+    - classpath:io/bootique/flyway/InfoCommandTest.conf
 
-log:
-  level: warn
-  loggers:
-    io.bootique.flyway:
-      level: info

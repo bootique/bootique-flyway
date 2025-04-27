@@ -42,7 +42,7 @@
     </modules>
 
     <properties>
-        <flyway.version>8.4.0</flyway.version>
+        <flyway.version>11.8.0</flyway.version>
         <postgresql.version>42.7.4</postgresql.version>
     </properties>
 
@@ -92,6 +92,11 @@
             <dependency>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-database-postgresql</artifactId>
                 <version>${flyway.version}</version>
             </dependency>
             <dependency>

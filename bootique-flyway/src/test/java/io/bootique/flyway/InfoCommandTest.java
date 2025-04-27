@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class InfoCommandTest {
 
     @BQTestTool
-    static final TcDbTester db = TcDbTester.db("jdbc:tc:postgresql:11:///info");
+    static final TcDbTester db = TcDbTester.db("jdbc:tc:postgresql:12:///info");
 
     @BQTestTool
     final BQTestFactory testFactory = new BQTestFactory();

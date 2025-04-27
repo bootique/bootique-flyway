@@ -1,5 +1,6 @@
 ## 4.0-M1
 
+* #18 Upgrade Flyway to 11.8.0
 * #19 Reimplement Flyway stack in a "canonical" way
 
 ## 3.0.M1
