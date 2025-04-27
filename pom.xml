@@ -71,11 +71,6 @@
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
-                <artifactId>bootique-jdbc-hikaricp</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.bootique.jdbc</groupId>
                 <artifactId>bootique-jdbc-junit5-testcontainers</artifactId>
                 <version>${project.version}</version>
             </dependency>
