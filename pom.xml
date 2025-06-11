@@ -43,7 +43,7 @@
 
     <properties>
         <flyway.version>11.8.0</flyway.version>
-        <postgresql.version>42.7.4</postgresql.version>
+        <postgresql.version>42.7.7</postgresql.version>
     </properties>
 
     <scm>
