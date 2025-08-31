@@ -56,11 +56,6 @@
         <dependencies>
             <dependency>
                 <groupId>io.bootique</groupId>
-                <artifactId>bootique</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.bootique</groupId>
                 <artifactId>bootique-junit5</artifactId>
                 <version>${project.version}</version>
             </dependency>
