@@ -45,10 +45,14 @@
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
-        <!-- Ensure the right version of Jackson TOML instead of the one included by Flyway -->
+        <!-- Ensure the right version of Jackson libs instead of the one included by Flyway -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-toml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
         <!-- By default, include a couple of popular DB plugins. The rest will need to be added by the users explicitly-->
