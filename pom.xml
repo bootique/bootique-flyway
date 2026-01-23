@@ -24,7 +24,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>4.0.3</version>
+        <version>4.0.4</version>
     </parent>
 
     <groupId>io.bootique.flyway</groupId>
@@ -71,8 +71,14 @@
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
-                <artifactId>postgresql</artifactId>
+                <artifactId>testcontainers-postgresql</artifactId>
                 <version>${testcontainers.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.testcontainers</groupId>
+                        <artifactId>testcontainers</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
