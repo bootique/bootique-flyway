@@ -20,11 +20,11 @@
 package io.bootique.flyway;
 
 import io.bootique.command.CommandOutcome;
-import io.bootique.jdbc.junit5.tc.TcDbTester;
-import io.bootique.junit5.BQTest;
-import io.bootique.junit5.BQTestFactory;
-import io.bootique.junit5.BQTestTool;
-import io.bootique.junit5.TestIO;
+import io.bootique.jdbc.junit.tc.TcDbTester;
+import io.bootique.junit.BQTest;
+import io.bootique.junit.BQTestFactory;
+import io.bootique.junit.BQTestTool;
+import io.bootique.junit.TestIO;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;

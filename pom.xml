@@ -24,7 +24,7 @@
     <parent>
         <groupId>io.bootique.modules.parent</groupId>
         <artifactId>bootique-modules-parent</artifactId>
-        <version>4.0.4</version>
+        <version>4.0.5</version>
     </parent>
 
     <groupId>io.bootique.flyway</groupId>
@@ -56,7 +56,7 @@
         <dependencies>
             <dependency>
                 <groupId>io.bootique</groupId>
-                <artifactId>bootique-junit5</artifactId>
+                <artifactId>bootique-junit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -66,7 +66,7 @@
             </dependency>
             <dependency>
                 <groupId>io.bootique.jdbc</groupId>
-                <artifactId>bootique-jdbc-junit5-testcontainers</artifactId>
+                <artifactId>bootique-jdbc-junit-testcontainers</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -133,7 +133,7 @@
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
-                <version>${junit5.version}</version>
+                <version>${junit.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

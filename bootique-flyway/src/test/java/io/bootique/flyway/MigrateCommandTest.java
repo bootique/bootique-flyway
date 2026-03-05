@@ -21,13 +21,13 @@ package io.bootique.flyway;
 
 import io.bootique.BQRuntime;
 import io.bootique.jdbc.DataSourceFactory;
-import io.bootique.jdbc.junit5.Table;
-import io.bootique.jdbc.junit5.connector.DbConnector;
-import io.bootique.jdbc.junit5.metadata.DbMetadata;
-import io.bootique.jdbc.junit5.tc.TcDbTester;
-import io.bootique.junit5.BQTest;
-import io.bootique.junit5.BQTestFactory;
-import io.bootique.junit5.BQTestTool;
+import io.bootique.jdbc.junit.Table;
+import io.bootique.jdbc.junit.connector.DbConnector;
+import io.bootique.jdbc.junit.metadata.DbMetadata;
+import io.bootique.jdbc.junit.tc.TcDbTester;
+import io.bootique.junit.BQTest;
+import io.bootique.junit.BQTestFactory;
+import io.bootique.junit.BQTestTool;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
