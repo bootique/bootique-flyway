@@ -35,7 +35,7 @@ Add proper dependencies. Here is a Maven example:
         <dependency>
             <groupId>io.bootique.bom</groupId>
             <artifactId>bootique-bom</artifactId>
-            <version>4.XX</version>
+            <version>4.0-M4</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
